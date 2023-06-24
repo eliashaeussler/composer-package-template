@@ -1,0 +1,25 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": [
+		"local>eliashaeussler/renovate-config"
+	],
+	"regexManagers": [
+		{
+			"fileMatch": [
+				"^config\\.yaml$"
+			],
+			"matchStrings": [
+				"value: '(?<currentValue>[^']+)' # renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)"
+			]
+		},
+		{
+			"fileMatch": [
+				"^templates/src/composer\\.json\\.twig$"
+			],
+			"matchStrings": [
+				"\"(?<depName>[\\w-]+/[\\w-]+)\": \"(?<currentValue>[^\"\\s]+)\""
+			],
+			"datasourceTemplate": "packagist"
+		}
+	]
+}

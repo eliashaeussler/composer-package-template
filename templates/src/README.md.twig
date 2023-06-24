@@ -1,0 +1,44 @@
+<div align="center">
+
+# {{ package.name }}
+
+{% if ci.codecov %}
+[![Coverage](https://img.shields.io/codecov/c/github/{{ repository.owner }}/{{ repository.name }}?logo=codecov&token=XXXXXXXXXX)](https://codecov.io/gh/{{ repository.owner }}/{{ repository.name }})
+{% endif %}
+{% if ci.codeclimate %}
+[![Maintainability](https://img.shields.io/codeclimate/maintainability/{{ repository.owner }}/{{ repository.name }}?logo=codeclimate)](https://codeclimate.com/github/{{ repository.owner }}/{{ repository.name }}/maintainability)
+{% endif %}
+{% if ci.github_actions %}
+[![CGL](https://img.shields.io/github/actions/workflow/status/{{ repository.owner }}/{{ repository.name }}/cgl.yaml?label=cgl&logo=github)]({{ repository.url }}/actions/workflows/cgl.yaml)
+{% if dependencies.phpunit %}
+[![Tests](https://img.shields.io/github/actions/workflow/status/{{ repository.owner }}/{{ repository.name }}/tests.yaml?label=tests&logo=github)]({{ repository.url }}/actions/workflows/tests.yaml)
+{% endif %}
+{% endif %}
+[![Supported PHP Versions](https://img.shields.io/packagist/dependency-v/{{ package.composer_name }}/php?logo=php)](https://packagist.org/packages/{{ package.composer_name }})
+
+</div>
+
+{{ package.description }}
+
+## 🔥 Installation
+
+[![Packagist](https://img.shields.io/packagist/v/{{ package.composer_name }}?label=version&logo=packagist)](https://packagist.org/packages/{{ package.composer_name }})
+[![Packagist Downloads](https://img.shields.io/packagist/dt/{{ package.composer_name }}?color=brightgreen)](https://packagist.org/packages/{{ package.composer_name }})
+
+```bash
+composer require {{ package.composer_name }}
+```
+
+## 🧑‍💻 Contributing
+
+Please have a look at [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+## ⭐ License
+
+{% if package.license == "GPL-3.0-or-later" %}
+This project is licensed under [GNU General Public License 3.0 (or later)](LICENSE).
+{% elseif package.license == "GPL-2.0-or-later" %}
+This project is licensed under [GNU General Public License 2.0 (or later)](LICENSE).
+{% elseif package.license == "proprietary" %}
+This project is proprietary and may not be used without permission.
+{% endif %}

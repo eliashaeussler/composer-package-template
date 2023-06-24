@@ -1,0 +1,14 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  EliasHaeussler\ComposerPackageTemplate\:
+    resource: '../src/*'
+
+  EliasHaeussler\ComposerPackageTemplate\EventListener\InitializeRepositoryListener:
+    tags: ['event.listener']
+
+  # External services
+  Symfony\Component\Process\ExecutableFinder:
