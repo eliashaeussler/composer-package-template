@@ -65,7 +65,17 @@ branches:
         require_code_owner_reviews: true
       required_status_checks:
         strict: true
-        checks: []
+        contexts:
+          - 'cgl'
+{% for phpVersion in dependencies.php %}
+          - 'Tests (PHP {{ phpVersion }} & locked dependencies)'
+          - 'Tests (PHP {{ phpVersion }} & highest dependencies)'
+          - 'Tests (PHP {{ phpVersion }} & lowest dependencies)'
+{% endfor %}
+          - 'Test coverage'
+{% if ci.codecov %}
+          - 'codecov/project'
+{% endif %}
       enforce_admins: false
       required_linear_history: true
       restrictions: null
