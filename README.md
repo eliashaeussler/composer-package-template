@@ -17,23 +17,23 @@ Rector as well as preconfigured GitHub Actions and issue templates.
 
 ## 🚀 Features
 
-|    | Feature                      | Tool                                                  |
-|----|------------------------------|-------------------------------------------------------|
-| 🧹 | **Code style maintenance**   | [PHP-CS-Fixer](https://cs.symfony.com/)               |
-| 🔍 | **Static code analysis**     | [PHPStan](https://phpstan.org/)                       |
-| 💡 | **Unit testing**             | [PHPUnit](https://phpunit.de/)                        |
-| 🏡 | **Automatic code migration** | [Rector](https://getrector.com/)                      |
-| 💅 | **Dependency handling**      | [Renovate](https://renovatebot.com/)                  |
-| 🏎 | **Continuous integration**   | [GitHub Actions](https://github.com/features/actions) |
-| 🧠 | **Code quality gate**        | [CodeClimate](https://codeclimate.com/)               |
-| 🦄 | **Code coverage**            | [Codecov](https://about.codecov.io/)                  |
+|    | Feature                  | Tool                                                  |
+|----|--------------------------|-------------------------------------------------------|
+| 🧹 | Code style maintenance   | [PHP-CS-Fixer](https://cs.symfony.com/)               |
+| 🔍 | Static code analysis     | [PHPStan](https://phpstan.org/)                       |
+| 💡 | Unit testing             | [PHPUnit](https://phpunit.de/)                        |
+| 🏡 | Automatic code migration | [Rector](https://getrector.com/)                      |
+| 💅 | Dependency handling      | [Renovate](https://renovatebot.com/)                  |
+| 🏎 | Continuous integration   | [GitHub Actions](https://github.com/features/actions) |
+| 🧠 | Code quality gate        | [CodeClimate](https://codeclimate.com/)               |
+| 🦄 | Code coverage            | [Codecov](https://about.codecov.io/)                  |
 
 ## 🔥 Installation
 
 [![Packagist](https://img.shields.io/packagist/v/eliashaeussler/composer-package-template?label=version&logo=packagist)](https://packagist.org/packages/eliashaeussler/composer-package-template)
 [![Packagist Downloads](https://img.shields.io/packagist/dt/eliashaeussler/composer-package-template?color=brightgreen)](https://packagist.org/packages/eliashaeussler/composer-package-template)
 
-1. Create a new project:
+1. [Create](https://project-builder.cps-it.de/getting-started.html) a new project:
 
    ```bash
    composer create-project cpsit/project-builder
