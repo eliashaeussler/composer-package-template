@@ -1,0 +1,24 @@
+<?php
+
+declare(strict_types=1);
+
+use EliasHaeussler\PhpCsFixerConfig;
+use Symfony\Component\Finder;
+
+$header = PhpCsFixerConfig\Rules\Header::create(
+    '{{ package.composer_name }}',
+    PhpCsFixerConfig\Package\Type::ComposerPackage,
+    PhpCsFixerConfig\Package\Author::create('{{ author.name }}', '{{ author.email }}'),
+{% if package.license == "GPL-3.0-or-later" %}
+    PhpCsFixerConfig\Package\License::GPL3OrLater,
+{% elseif package.license == "GPL-2.0-or-later" %}
+    PhpCsFixerConfig\Package\License::GPL2OrLater,
+{% elseif package.license == "proprietary" %}
+    PhpCsFixerConfig\Package\License::Proprietary,
+{% endif %}
+);
+
+return PhpCsFixerConfig\Config::create()
+    ->withRule($header)
+    ->withFinder(static fn (Finder\Finder $finder) => $finder->in(__DIR__))
+;

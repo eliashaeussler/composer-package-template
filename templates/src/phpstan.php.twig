@@ -1,0 +1,17 @@
+<?php
+
+declare(strict_types=1);
+
+use EliasHaeussler\PHPStanConfig;
+
+return PHPStanConfig\Config\Config::create(__DIR__)
+    ->in(
+        'src',
+{% if dependencies.phpunit %}
+        'tests',
+{% endif %}
+    )
+    ->withBleedingEdge()
+    ->maxLevel()
+    ->toArray()
+;

@@ -1,0 +1,21 @@
+<?php
+
+declare(strict_types=1);
+
+use EliasHaeussler\RectorConfig\Config\Config;
+use Rector\Config\RectorConfig;
+
+return static function (RectorConfig $rectorConfig): void {
+    Config::create($rectorConfig)
+        ->in(
+            __DIR__.'/src',
+{% if dependencies.phpunit %}
+            __DIR__.'/tests',
+{% endif %}
+        )
+{% if dependencies.phpunit %}
+        ->withPHPUnit()
+{% endif %}
+        ->apply()
+    ;
+};

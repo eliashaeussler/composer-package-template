@@ -1,0 +1,189 @@
+name: Composer-based package
+
+steps:
+  - type: collectBuildInstructions
+  - type: processSourceFiles
+    options:
+      fileConditions:
+        # CI/CD
+        - path: '.github/workflows/*'
+          if: 'ci["github_actions"]'
+        - path: '.github/workflows/tests.yaml.twig'
+          if: 'ci["github_actions"] && dependencies["phpunit"]'
+        - path: 'codecov.yml'
+          if: 'ci["codecov"]'
+
+        # CGL
+        - path: 'phpstan.php.twig'
+          if: 'dependencies["phpstan"]'
+        - path: 'phpunit.xml'
+          if: 'dependencies["phpunit"]'
+        - path: 'rector.php.twig'
+          if: 'dependencies["rector"]'
+
+        # Tests
+        - path: 'tests/*'
+          if: 'dependencies["phpunit"]'
+
+        # License
+        - path: 'LICENSE.GPL-2.0-or-later.txt'
+          if: 'package["license"] == "GPL-2.0-or-later"'
+          target: 'LICENSE'
+        - path: 'LICENSE.GPL-3.0-or-later.txt'
+          if: 'package["license"] == "GPL-3.0-or-later"'
+          target: 'LICENSE'
+  - type: generateBuildArtifact
+  - type: mirrorProcessedFiles
+
+properties:
+  # Package
+  - identifier: package
+    name: Package
+    properties:
+      - identifier: vendor
+        name: Vendor name
+        type: staticValue
+        validators:
+          - type: notEmpty
+      - identifier: name
+        name: Package name
+        type: staticValue
+        validators:
+          - type: notEmpty
+      - identifier: composer_name
+        name: Composer package name
+        type: staticValue
+        defaultValue: '{{ package.vendor|slugify }}/{{ package.name|slugify }}'
+        validators:
+          - type: notEmpty
+          - type: regex
+            options:
+              # see https://github.com/composer/composer/blob/2.5.8/res/composer-schema.json#L9
+              pattern: '/^[a-z0-9]([_.-]?[a-z0-9]+)*\/[a-z0-9](([_.]|-{1,2})?[a-z0-9]+)*$/'
+      - identifier: description
+        name: Description
+        type: staticValue
+        validators:
+          - type: notEmpty
+      - identifier: license
+        name: License
+        type: select
+        options:
+          - value: GPL-3.0-or-later
+          - value: GPL-2.0-or-later
+          - value: proprietary
+        defaultValue: GPL-3.0-or-later
+        validators:
+          - type: notEmpty
+      - identifier: type
+        name: Composer type
+        type: staticValue
+        defaultValue: library
+        validators:
+          - type: notEmpty
+      - identifier: psr4_namespace
+        name: PSR-4 namespace
+        type: staticValue
+        defaultValue: "{{ package.vendor|convert_case('upper_camel') }}\\{{ package.name|convert_case('upper_camel') }}"
+        validators:
+          - type: notEmpty
+
+  # Dependencies
+  - identifier: dependencies
+    name: Dependencies
+    properties:
+      - identifier: php
+        name: Supported PHP versions
+        type: select
+        multiple: true
+        options:
+          - value: '8.1'
+          - value: '8.2'
+        validators:
+          - type: notEmpty
+      - identifier: phpstan
+        name: What about static code analysis with <comment>PHPStan</comment>?
+        type: question
+        defaultValue: true
+      - identifier: phpunit
+        name: Are you going to write tests with <comment>PHPUnit</comment>?
+        type: question
+        defaultValue: true
+      - identifier: rector
+        name: Do you need migration assistance with <comment>Rector</comment>?
+        type: question
+        defaultValue: true
+
+  # Continuous Integration
+  - identifier: ci
+    name: Continuous Integration
+    properties:
+      - identifier: github_actions
+        name: Should the package use some <comment>GitHub Actions</comment>?
+        type: question
+        defaultValue: true
+      - identifier: codeclimate
+        name: Do you want to integrate <comment>CodeClimate</comment>?
+        type: question
+        if: 'ci["github_actions"] && dependencies["phpunit"]'
+        defaultValue: true
+      - identifier: codecov
+        name: Should <comment>Codecov</comment> monitor your code coverage?
+        type: question
+        if: 'ci["github_actions"] && dependencies["phpunit"]'
+        defaultValue: true
+
+  # Author
+  - identifier: author
+    name: Author
+    properties:
+      - identifier: name
+        name: Your name
+        type: staticValue
+        defaultValue: '{{ get_default_author_name() }}'
+        validators:
+          - type: notEmpty
+      - identifier: email
+        name: Your email address
+        type: staticValue
+        defaultValue: '{{ get_default_author_email() }}'
+        validators:
+          - type: notEmpty
+          - type: email
+      - identifier: homepage
+        name: Your homepage
+        type: staticValue
+        validators:
+          - type: url
+      - identifier: role
+        name: Your role
+        type: staticValue
+        defaultValue: Maintainer
+        validators:
+          - type: notEmpty
+
+  # Repository
+  - identifier: repository
+    name: Repository
+    properties:
+      - identifier: owner
+        name: Owner
+        type: staticValue
+        defaultValue: "{{ package.vendor|slugify }}"
+        validators:
+          - type: notEmpty
+      - identifier: name
+        name: Name
+        type: staticValue
+        defaultValue: "{{ package.name|slugify }}"
+        validators:
+          - type: notEmpty
+      - identifier: url
+        name: URL
+        type: staticValue
+        defaultValue: "https://github.com/{{ repository.owner }}/{{ repository.name }}"
+        validators:
+          - type: notEmpty
+      - identifier: topics
+        name: 'Topics <fg=gray>(separated by comma)</>'
+        type: staticValue

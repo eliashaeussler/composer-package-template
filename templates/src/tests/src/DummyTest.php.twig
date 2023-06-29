@@ -1,0 +1,31 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ package.psr4_namespace }}\Tests;
+
+use EliasHaeussler\Foo as Src;
+use PHPUnit\Framework;
+
+/**
+ * DummyTest.
+ *
+ * @author {{ author.name }} <{{ author.email }}>
+ * @license {{ package.license }}
+ */
+#[Framework\Attributes\CoversClass(Src\Dummy::class)]
+final class DummyTest extends Framework\TestCase
+{
+    private Src\Dummy $subject;
+
+    protected function setUp(): void
+    {
+        $this->subject = new Src\Dummy();
+    }
+
+    #[Framework\Attributes\Test]
+    public function helloWorldReturnsTrue(): void
+    {
+        self::assertTrue($this->subject->helloWorld());
+    }
+}
