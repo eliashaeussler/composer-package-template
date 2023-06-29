@@ -6,7 +6,6 @@
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/eliashaeussler/composer-package-template?logo=codeclimate)](https://codeclimate.com/github/eliashaeussler/composer-package-template/maintainability)
 [![CGL](https://img.shields.io/github/actions/workflow/status/eliashaeussler/composer-package-template/cgl.yaml?label=cgl&logo=github)](https://github.com/eliashaeussler/composer-package-template/actions/workflows/cgl.yaml)
 [![Tests](https://img.shields.io/github/actions/workflow/status/eliashaeussler/composer-package-template/tests.yaml?label=tests&logo=github)](https://github.com/eliashaeussler/composer-package-template/actions/workflows/tests.yaml)
-[![Supported PHP Versions](https://img.shields.io/packagist/dependency-v/eliashaeussler/composer-package-template/php?logo=php)](https://packagist.org/packages/eliashaeussler/composer-package-template)
 
 </div>
 
