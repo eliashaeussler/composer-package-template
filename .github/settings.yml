@@ -1,6 +1,6 @@
 repository:
   name: 'composer-package-template'
-  description: 'Project builder template for Composer-based packages'
+  description: '🌶️ Project builder template for Composer-based packages'
   topics: 'template, package, composer, project-builder'
   private: false
   has_issues: true
@@ -66,15 +66,15 @@ branches:
       required_status_checks:
         strict: true
         contexts:
-          - "cgl"
-          - "Tests (PHP 8.1 & locked dependencies)"
-          - "Tests (PHP 8.1 & highest dependencies)"
-          - "Tests (PHP 8.1 & lowest dependencies)"
-          - "Tests (PHP 8.2 & locked dependencies)"
-          - "Tests (PHP 8.2 & highest dependencies)"
-          - "Tests (PHP 8.2 & lowest dependencies)"
-          - "Test coverage"
-          - "codecov/project"
+          - 'cgl'
+          - 'Tests (PHP 8.1 & locked dependencies)'
+          - 'Tests (PHP 8.1 & highest dependencies)'
+          - 'Tests (PHP 8.1 & lowest dependencies)'
+          - 'Tests (PHP 8.2 & locked dependencies)'
+          - 'Tests (PHP 8.2 & highest dependencies)'
+          - 'Tests (PHP 8.2 & lowest dependencies)'
+          - 'Test coverage'
+          - 'codecov/project'
       enforce_admins: false
       required_linear_history: true
       restrictions: null
