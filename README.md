@@ -19,8 +19,8 @@ Rector as well as preconfigured GitHub Actions and issue templates.
 |    | Feature                  | Tool                                                  |
 |----|--------------------------|-------------------------------------------------------|
 | 🏡 | Automatic code migration | [Rector](https://getrector.com/)                      |
-| 🧠 | Code quality gate        | [CodeClimate](https://codeclimate.com/)               |
 | 🦄 | Code coverage            | [Codecov](https://about.codecov.io/)                  |
+| 🧠 | Code quality gate        | [CodeClimate](https://codeclimate.com/)               |
 | 🧹 | Coding standards         | [PHP-CS-Fixer](https://cs.symfony.com/)               |
 | 🏎 | Continuous integration   | [GitHub Actions](https://github.com/features/actions) |
 | 💅 | Dependency handling      | [Renovate](https://renovatebot.com/)                  |
