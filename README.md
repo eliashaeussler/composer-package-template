@@ -18,14 +18,14 @@ Rector as well as preconfigured GitHub Actions and issue templates.
 
 |    | Feature                  | Tool                                                  |
 |----|--------------------------|-------------------------------------------------------|
-| 🧹 | Code style maintenance   | [PHP-CS-Fixer](https://cs.symfony.com/)               |
-| 🔍 | Static code analysis     | [PHPStan](https://phpstan.org/)                       |
-| 💡 | Unit testing             | [PHPUnit](https://phpunit.de/)                        |
 | 🏡 | Automatic code migration | [Rector](https://getrector.com/)                      |
-| 💅 | Dependency handling      | [Renovate](https://renovatebot.com/)                  |
-| 🏎 | Continuous integration   | [GitHub Actions](https://github.com/features/actions) |
 | 🧠 | Code quality gate        | [CodeClimate](https://codeclimate.com/)               |
 | 🦄 | Code coverage            | [Codecov](https://about.codecov.io/)                  |
+| 🧹 | Coding standards         | [PHP-CS-Fixer](https://cs.symfony.com/)               |
+| 🏎 | Continuous integration   | [GitHub Actions](https://github.com/features/actions) |
+| 💅 | Dependency handling      | [Renovate](https://renovatebot.com/)                  |
+| 🔍 | Static code analysis     | [PHPStan](https://phpstan.org/)                       |
+| 💡 | Unit testing             | [PHPUnit](https://phpunit.de/)                        |
 
 ## 🔥 Installation
 
