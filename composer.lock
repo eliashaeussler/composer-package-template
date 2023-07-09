@@ -82,16 +82,16 @@
         },
         {
             "name": "cpsit/project-builder",
-            "version": "2.2.4",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CPS-IT/project-builder.git",
-                "reference": "ad7d646be95e9e0a8f41977a3182e1f4e0d4bb84"
+                "reference": "7a06e369d504491f3c9009467ce68faada80e86b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CPS-IT/project-builder/zipball/ad7d646be95e9e0a8f41977a3182e1f4e0d4bb84",
-                "reference": "ad7d646be95e9e0a8f41977a3182e1f4e0d4bb84",
+                "url": "https://api.github.com/repos/CPS-IT/project-builder/zipball/7a06e369d504491f3c9009467ce68faada80e86b",
+                "reference": "7a06e369d504491f3c9009467ce68faada80e86b",
                 "shasum": ""
             },
             "require": {
@@ -116,6 +116,7 @@
                 "symfony/expression-language": "^5.4 || ^6.0",
                 "symfony/filesystem": "^5.4 || ^6.0",
                 "symfony/finder": "^5.4 || ^6.0",
+                "symfony/process": "^5.4 || ^6.0",
                 "symfony/yaml": "^5.4 || ^6.0",
                 "twig/twig": "^3.3.3",
                 "webmozart/assert": "^1.11"
@@ -167,9 +168,9 @@
             "description": "Composer package to create new projects from project templates",
             "support": {
                 "issues": "https://github.com/CPS-IT/project-builder/issues",
-                "source": "https://github.com/CPS-IT/project-builder/tree/2.2.4"
+                "source": "https://github.com/CPS-IT/project-builder/tree/2.3.0"
             },
-            "time": "2023-06-28T18:35:39+00:00"
+            "time": "2023-07-08T10:15:54+00:00"
         },
         {
             "name": "cuyz/valinor",
