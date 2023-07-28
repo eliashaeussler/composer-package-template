@@ -28,7 +28,10 @@ use CPSIT\ProjectBuilder;
 use EliasHaeussler\ComposerPackageTemplate as Src;
 use Nyholm\Psr7;
 use PHPUnit\Framework;
+use Symfony\Component\EventDispatcher;
 use Symfony\Component\ExpressionLanguage;
+use Twig\Environment;
+use Twig\Loader;
 
 /**
  * InitializeRepositoryListenerTest.
@@ -77,6 +80,12 @@ final class InitializeRepositoryListenerTest extends Framework\TestCase
                 new ExpressionLanguage\ExpressionLanguage(),
                 $messenger,
                 new ProjectBuilder\Builder\Generator\Step\Interaction\InteractionFactory([]),
+                new ProjectBuilder\Twig\Renderer(
+                    new Environment(
+                        new Loader\ArrayLoader(),
+                    ),
+                    new EventDispatcher\EventDispatcher(),
+                ),
             ),
             new ProjectBuilder\Builder\BuildResult(
                 $instructions,
