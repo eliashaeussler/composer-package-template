@@ -24,7 +24,6 @@ declare(strict_types=1);
 use EliasHaeussler\RectorConfig\Config\Config;
 use Rector\Config\RectorConfig;
 use Rector\Core\ValueObject\PhpVersion;
-use Rector\Privatization\Rector\Class_\ChangeReadOnlyVariableWithDefaultValueToConstantRector;
 
 return static function (RectorConfig $rectorConfig): void {
     Config::create($rectorConfig, PhpVersion::PHP_81)
@@ -33,9 +32,6 @@ return static function (RectorConfig $rectorConfig): void {
             __DIR__.'/tests/src',
         )
         ->withPHPUnit()
-        ->skip(ChangeReadOnlyVariableWithDefaultValueToConstantRector::class, [
-            __DIR__.'/tests/src/Helper/UriHelperTest.php',
-        ])
         ->apply()
     ;
 };
