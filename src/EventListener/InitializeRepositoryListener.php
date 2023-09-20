@@ -44,8 +44,7 @@ final class InitializeRepositoryListener
         private readonly Service\GitHubService $gitHubService,
         private readonly ProjectBuilder\IO\InputReader $inputReader,
         private readonly ProjectBuilder\IO\Messenger $messenger,
-    ) {
-    }
+    ) {}
 
     public function __invoke(ProjectBuilder\Event\BuildStepProcessedEvent $event): void
     {
