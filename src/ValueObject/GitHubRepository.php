@@ -43,8 +43,7 @@ final class GitHubRepository
         private readonly Message\UriInterface $url,
         private readonly string $description = '',
         private readonly bool $private = false,
-    ) {
-    }
+    ) {}
 
     /**
      * @return non-empty-string

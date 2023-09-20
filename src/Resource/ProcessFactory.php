@@ -44,8 +44,7 @@ final class ProcessFactory
 
     public function __construct(
         private readonly Process\ExecutableFinder $executableFinder,
-    ) {
-    }
+    ) {}
 
     /**
      * @param non-empty-list<string> $command
