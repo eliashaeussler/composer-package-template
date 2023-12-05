@@ -6,6 +6,7 @@
 /.gitignore               export-ignore
 /.php-cs-fixer.php        export-ignore
 /.twig_cs.php             export-ignore
+/codecov.yml              export-ignore
 /CODEOWNERS               export-ignore
 /composer.lock            export-ignore
 /CONTRIBUTING.md          export-ignore
