@@ -1,91 +1,91 @@
 {
-    "name": "{{ package.composer_name }}",
-    "description": "{{ package.description }}",
-    "license": "{{ package.license }}",
-    "type": "{{ package.type }}",
-    "authors": [
-        {
-            "name": "{{ author.name }}",
-            "email": "{{ author.email }}",
+	"name": "{{ package.composer_name }}",
+	"description": "{{ package.description }}",
+	"license": "{{ package.license }}",
+	"type": "{{ package.type }}",
+	"authors": [
+		{
+			"name": "{{ author.name }}",
+			"email": "{{ author.email }}",
 {% if author.homepage %}
-            "homepage": "{{ author.homepage }}",
+			"homepage": "{{ author.homepage }}",
 {% endif %}
-            "role": "{{ author.role }}"
-        }
-    ],
-    "require": {
-        "php": "{{ dependencies.php|sort|map(version => "~#{version}.0")|join(' || ') }}"
-    },
-    "require-dev": {
-        "armin/editorconfig-cli": "^1.5",
-        "eliashaeussler/php-cs-fixer-config": "^1.2",
+			"role": "{{ author.role }}"
+		}
+	],
+	"require": {
+		"php": "{{ dependencies.php|sort|map(version => "~#{version}.0")|join(' || ') }}"
+	},
+	"require-dev": {
+		"armin/editorconfig-cli": "^1.5",
+		"eliashaeussler/php-cs-fixer-config": "^1.2",
 {% if dependencies.phpstan %}
-        "eliashaeussler/phpstan-config": "^2.0",
+		"eliashaeussler/phpstan-config": "^2.0",
 {% endif %}
 {% if dependencies.rector %}
-        "eliashaeussler/rector-config": "^2.0",
+		"eliashaeussler/rector-config": "^2.0",
 {% endif %}
-        "ergebnis/composer-normalize": "^2.30"{% if dependencies.phpstan or dependencies.phpunit %},{% endif %}
+		"ergebnis/composer-normalize": "^2.30"{% if dependencies.phpstan or dependencies.phpunit %},{% endif %}
 {% if dependencies.phpstan %}
-        "phpstan/extension-installer": "^1.2"{% if dependencies.phpunit %},
-        "phpstan/phpstan-phpunit": "^1.1",{% endif %}
+		"phpstan/extension-installer": "^1.2"{% if dependencies.phpunit %},
+		"phpstan/phpstan-phpunit": "^1.1",{% endif %}
 {% endif %}
 {% if dependencies.phpunit %}
-        "phpunit/phpunit": "^10.2"
+		"phpunit/phpunit": "^10.2"
 {% endif %}
-    },
-    "autoload": {
-        "psr-4": {
-            "{{ package.psr4_namespace|replace({'\\': '\\\\'}) }}\\": "src/"
-        }
-    },
+	},
+	"autoload": {
+		"psr-4": {
+			"{{ package.psr4_namespace|replace({'\\': '\\\\'}) }}\\": "src/"
+		}
+	},
 {% if dependencies.phpunit %}
-    "autoload-dev": {
-        "psr-4": {
-            "{{ package.psr4_namespace|replace({'\\': '\\\\'}) }}\\Tests\\": "tests/"
-        }
-    },
+	"autoload-dev": {
+		"psr-4": {
+			"{{ package.psr4_namespace|replace({'\\': '\\\\'}) }}\\Tests\\": "tests/"
+		}
+	},
 {% endif %}
-    "config": {
-        "allow-plugins": {
+	"config": {
+		"allow-plugins": {
 {% if dependencies.phpstan %}
-            "phpstan/extension-installer": true,
+			"phpstan/extension-installer": true,
 {% endif %}
-            "ergebnis/composer-normalize": true
-        },
-        "sort-packages": true
-    },
-    "scripts": {
-        "fix": [
-            "@fix:composer",
-            "@fix:editorconfig",
-            "@fix:php"
-        ],
-        "fix:composer": "@composer normalize",
-        "fix:editorconfig": "@lint:editorconfig --fix",
-        "fix:php": "php-cs-fixer fix",
-        "lint": [
-            "@lint:composer",
-            "@lint:editorconfig",
-            "@lint:php"
-        ],
-        "lint:composer": "@fix:composer --dry-run",
-        "lint:editorconfig": "ec",
-        "lint:php": "@fix:php --dry-run"{% if dependencies.rector %},
-        "migration": [
-            "@migration:rector"
-        ],
-        "migration:rector": "rector process -c rector.php"{% if dependencies.phpstan %},{% endif %}
+			"ergebnis/composer-normalize": true
+		},
+		"sort-packages": true
+	},
+	"scripts": {
+		"fix": [
+			"@fix:composer",
+			"@fix:editorconfig",
+			"@fix:php"
+		],
+		"fix:composer": "@composer normalize",
+		"fix:editorconfig": "@lint:editorconfig --fix",
+		"fix:php": "php-cs-fixer fix",
+		"lint": [
+			"@lint:composer",
+			"@lint:editorconfig",
+			"@lint:php"
+		],
+		"lint:composer": "@fix:composer --dry-run",
+		"lint:editorconfig": "ec",
+		"lint:php": "@fix:php --dry-run"{% if dependencies.rector %},
+		"migration": [
+			"@migration:rector"
+		],
+		"migration:rector": "rector process -c rector.php"{% if dependencies.phpstan %},{% endif %}
 {% endif %}
 {% if dependencies.phpstan %}
-        "sca": [
-            "@sca:php"
-        ],
-        "sca:php": "phpstan analyse -c phpstan.php"{% if dependencies.phpunit %},{% endif %}
+		"sca": [
+			"@sca:php"
+		],
+		"sca:php": "phpstan analyse -c phpstan.php"{% if dependencies.phpunit %},{% endif %}
 {% endif %}
 {% if dependencies.phpunit %}
-        "test": "@test:coverage --no-coverage",
-        "test:coverage": "phpunit -c phpunit.xml"
+		"test": "@test:coverage --no-coverage",
+		"test:coverage": "phpunit -c phpunit.xml"
 {% endif %}
-    }
+	}
 }
