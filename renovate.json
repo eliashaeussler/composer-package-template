@@ -3,6 +3,9 @@
 	"extends": [
 		"local>eliashaeussler/renovate-config"
 	],
+	"constraints": {
+		"php": "8.1.*"
+	},
 	"customManagers": [
 		{
 			"customType": "regex",
