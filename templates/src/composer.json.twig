@@ -42,7 +42,7 @@
 {% if dependencies.phpunit %}
 	"autoload-dev": {
 		"psr-4": {
-			"{{ package.psr4_namespace|replace({'\\': '\\\\'}) }}\\Tests\\": "tests/"
+			"{{ package.psr4_namespace|replace({'\\': '\\\\'}) }}\\Tests\\": "tests/src/"
 		}
 	},
 {% endif %}
