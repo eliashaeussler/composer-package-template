@@ -17,7 +17,7 @@
 		"php": "{{ dependencies.php|sort|map(version => "~#{version}.0")|join(' || ') }}"
 	},
 	"require-dev": {
-		"armin/editorconfig-cli": "^1.5",
+		"armin/editorconfig-cli": "^2.0",
 		"eliashaeussler/php-cs-fixer-config": "^2.0",
 {% if dependencies.phpstan %}
 		"eliashaeussler/phpstan-config": "^2.0",
