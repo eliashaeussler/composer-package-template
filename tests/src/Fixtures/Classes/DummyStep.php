@@ -23,7 +23,6 @@ declare(strict_types=1);
 
 namespace EliasHaeussler\ComposerPackageTemplate\Tests\Fixtures\Classes;
 
-use CPSIT\ProjectBuilder;
 use CPSIT\ProjectBuilder\Builder;
 
 /**
@@ -34,7 +33,7 @@ use CPSIT\ProjectBuilder\Builder;
  *
  * @internal
  */
-final class DummyStep implements ProjectBuilder\Builder\Generator\Step\StepInterface
+final class DummyStep implements Builder\Generator\Step\StepInterface
 {
     public function run(Builder\BuildResult $buildResult): bool
     {
