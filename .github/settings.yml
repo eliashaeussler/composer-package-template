@@ -78,7 +78,6 @@ branches:
         required_approving_review_count: 1
         dismiss_stale_reviews: true
         require_code_owner_reviews: true
-        dismissal_restrictions: {}
       required_status_checks:
         strict: true
         contexts:
@@ -96,4 +95,4 @@ branches:
           - 'codecov/project'
       enforce_admins: false
       required_linear_history: true
-      restrictions: null
+      restrictions: ~
