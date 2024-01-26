@@ -34,11 +34,14 @@ steps:
           target: 'LICENSE'
   - type: generateBuildArtifact
   - type: mirrorProcessedFiles
+  # run shell commands on the local machine
   - type: runCommand
     options:
-      command: "composer normalize"
+      command: "composer update"
       skipConfirmation: true
-
+  - type: runCommand
+    options:
+    command: "composer normalize"
 properties:
   # Package
   - identifier: package
