@@ -82,16 +82,16 @@
         },
         {
             "name": "cpsit/project-builder",
-            "version": "2.6.3",
+            "version": "2.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CPS-IT/project-builder.git",
-                "reference": "5bb384968d111a400ea045dd78a53cc628e2053f"
+                "reference": "743e5b354a9370fdd78c18b738c68555e26e0f86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CPS-IT/project-builder/zipball/5bb384968d111a400ea045dd78a53cc628e2053f",
-                "reference": "5bb384968d111a400ea045dd78a53cc628e2053f",
+                "url": "https://api.github.com/repos/CPS-IT/project-builder/zipball/743e5b354a9370fdd78c18b738c68555e26e0f86",
+                "reference": "743e5b354a9370fdd78c18b738c68555e26e0f86",
                 "shasum": ""
             },
             "require": {
@@ -110,7 +110,7 @@
                 "psr/http-message": "^1.0 || ^2.0",
                 "sebastianfeldmann/cli": "^3.4",
                 "symfony/config": "^5.4 || ^6.0 || ^7.0",
-                "symfony/console": "^5.4 || ^6.0 || ^7.0",
+                "symfony/console": "^5.4 || ^6.0",
                 "symfony/dependency-injection": "^5.4 || ^6.0 || ^7.0",
                 "symfony/event-dispatcher": "^5.4 || ^6.0 || ^7.0",
                 "symfony/expression-language": "^5.4 || ^6.0 || ^7.0",
@@ -137,7 +137,7 @@
                 "phpstan/phpstan-symfony": "^1.2",
                 "phpstan/phpstan-webmozart-assert": "^1.2",
                 "phpunit/phpunit": "^10.1",
-                "rector/rector": "^0.18.0",
+                "rector/rector": "^0.19.0",
                 "seld/jsonlint": "^1.9"
             },
             "type": "library",
@@ -168,9 +168,9 @@
             "description": "Composer package to create new projects from project templates",
             "support": {
                 "issues": "https://github.com/CPS-IT/project-builder/issues",
-                "source": "https://github.com/CPS-IT/project-builder/tree/2.6.3"
+                "source": "https://github.com/CPS-IT/project-builder/tree/2.6.4"
             },
-            "time": "2023-12-29T11:40:57+00:00"
+            "time": "2024-01-26T16:48:00+00:00"
         },
         {
             "name": "cuyz/valinor",
