@@ -37,11 +37,8 @@ steps:
   # run shell commands on the local machine
   - type: runCommand
     options:
-      command: "composer update"
-      skipConfirmation: true
-  - type: runCommand
-    options:
-    command: "composer normalize"
+      command: "composer update && composer normalize"
+      # todo: allow-failure: true
 properties:
   # Package
   - identifier: package
