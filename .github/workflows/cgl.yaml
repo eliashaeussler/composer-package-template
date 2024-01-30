@@ -21,7 +21,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.3
-          tools: composer:v2, composer-require-checker, composer-unused
+          tools: composer:v2, composer-require-checker, composer-unused, cs2pr
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -49,11 +49,11 @@ jobs:
       - name: Lint Editorconfig
         run: composer lint:editorconfig
       - name: Lint PHP
-        run: composer lint:php
+        run: composer lint:php -- --format checkstyle | cs2pr
       - name: Lint Twig templates
-        run: composer lint:twig
+        run: composer lint:twig -- --reporter githubAction
       - name: Lint YAML files
-        run: composer lint:yaml
+        run: composer lint:yaml -- --format github
 
       # Schema
       - name: Validate config.yaml against JSON schema
