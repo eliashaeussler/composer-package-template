@@ -50,6 +50,14 @@ jobs:
         run: composer lint:editorconfig
       - name: Lint PHP
         run: composer lint:php
+      - name: Lint Twig templates
+        run: composer lint:twig
+      - name: Lint YAML files
+        run: composer lint:yaml
+
+      # Schema
+      - name: Validate config.yaml against JSON schema
+        run: composer validate-schema
 
       # SCA
       - name: SCA PHP
