@@ -83,10 +83,10 @@ branches:
         strict: true
         contexts:
           - 'cgl'
-{% for phpVersion in dependencies.php %}
-          - 'Tests (PHP {{ phpVersion }} & locked dependencies)'
-          - 'Tests (PHP {{ phpVersion }} & highest dependencies)'
-          - 'Tests (PHP {{ phpVersion }} & lowest dependencies)'
+{% for php_version in dependencies.php %}
+          - 'Tests (PHP {{ php_version }} & locked dependencies)'
+          - 'Tests (PHP {{ php_version }} & highest dependencies)'
+          - 'Tests (PHP {{ php_version }} & lowest dependencies)'
 {% endfor %}
           - 'Test coverage'
 {% if ci.codecov %}
