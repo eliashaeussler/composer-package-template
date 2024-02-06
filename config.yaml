@@ -34,7 +34,6 @@ steps:
           target: 'LICENSE'
   - type: generateBuildArtifact
   - type: mirrorProcessedFiles
-  # run shell commands on the local machine
   - type: runCommand
     options:
       command: "composer update && composer normalize"
