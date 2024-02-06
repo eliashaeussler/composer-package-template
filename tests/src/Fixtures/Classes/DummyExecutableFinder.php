@@ -43,7 +43,7 @@ final class DummyExecutableFinder extends Process\ExecutableFinder
     /**
      * @param array<mixed> $extraDirs
      */
-    public function find(string $name, string $default = null, array $extraDirs = []): ?string
+    public function find(string $name, ?string $default = null, array $extraDirs = []): ?string
     {
         return array_shift($this->executables);
     }
