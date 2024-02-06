@@ -13,7 +13,7 @@
 	],
 	"require": {
 		"php": "~8.1.0 || ~8.2.0 || ~8.3.0",
-		"cpsit/project-builder": "^2.3",
+		"cpsit/project-builder": "^2.7",
 		"guzzlehttp/guzzle": "^7.0",
 		"nyholm/psr7": "^1.5",
 		"psr/http-client": "^1.0",
