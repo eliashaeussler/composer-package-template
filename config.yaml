@@ -34,7 +34,10 @@ steps:
           target: 'LICENSE'
   - type: generateBuildArtifact
   - type: mirrorProcessedFiles
-
+  - type: runCommand
+    options:
+      command: "composer update && composer normalize"
+      allowFailure: true
 properties:
   # Package
   - identifier: package
