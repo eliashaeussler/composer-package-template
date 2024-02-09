@@ -53,6 +53,11 @@
 		},
 		"sort-packages": true
 	},
+	"extra": {
+		"cpsit/project-builder": {
+			"exclude-from-listing": true
+		}
+	},
 	"scripts": {
 		"fix": [
 			"@fix:composer",
