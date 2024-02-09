@@ -1,6 +1,6 @@
 {
 	"name": "eliashaeussler/composer-package-template",
-	"description": "Project builder template for Composer-based packages",
+	"description": "Composer package template",
 	"license": "GPL-3.0-or-later",
 	"type": "project-builder-template",
 	"authors": [
