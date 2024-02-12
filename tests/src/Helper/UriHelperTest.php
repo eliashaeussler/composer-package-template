@@ -73,7 +73,7 @@ final class UriHelperTest extends Framework\TestCase
             'baz' => 'foo',
         ];
 
-        self::assertEquals(
+        self::assertSame(
             '/baz/foo',
             Src\Helper\UriHelper::interpolatePathParameters($path, $parameters),
         );
