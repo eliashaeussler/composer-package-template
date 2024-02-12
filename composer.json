@@ -26,7 +26,7 @@
 		"composer/composer": "^2.1",
 		"eliashaeussler/php-cs-fixer-config": "^2.0",
 		"eliashaeussler/phpstan-config": "^2.1",
-		"eliashaeussler/rector-config": "^2.0",
+		"eliashaeussler/rector-config": "^3.0",
 		"ergebnis/composer-normalize": "^2.30",
 		"friendsoftwig/twigcs": "^6.2",
 		"j13k/yaml-lint": "^1.1",
