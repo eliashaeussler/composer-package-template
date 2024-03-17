@@ -10,8 +10,6 @@ steps:
           if: 'ci["github_actions"]'
         - path: '.github/workflows/tests.yaml.twig'
           if: 'ci["github_actions"] && dependencies["phpunit"]'
-        - path: 'codecov.yml'
-          if: 'ci["codecov"]'
 
         # CGL
         - path: 'phpstan.php.twig'
@@ -131,8 +129,8 @@ properties:
         type: question
         if: 'ci["github_actions"] && dependencies["phpunit"]'
         defaultValue: true
-      - identifier: codecov
-        name: Should <comment>Codecov</comment> monitor your code coverage?
+      - identifier: coveralls
+        name: Should <comment>Coveralls</comment> monitor your code coverage?
         type: question
         if: 'ci["github_actions"] && dependencies["phpunit"]'
         defaultValue: true

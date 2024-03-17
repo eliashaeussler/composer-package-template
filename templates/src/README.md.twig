@@ -2,8 +2,8 @@
 
 # {{ package.name }}
 
-{% if ci.codecov %}
-[![Coverage](https://img.shields.io/codecov/c/github/{{ repository.owner }}/{{ repository.name }}?logo=codecov&token=XXXXXXXXXX)](https://codecov.io/gh/{{ repository.owner }}/{{ repository.name }})
+{% if ci.coveralls %}
+[![Coverage](https://img.shields.io/coverallsCoverage/github/{{ repository.owner }}/{{ repository.name }}?logo=coveralls)](https://coveralls.io/github/{{ repository.owner }}/{{ repository.name }})
 {% endif %}
 {% if ci.codeclimate %}
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/{{ repository.owner }}/{{ repository.name }}?logo=codeclimate)](https://codeclimate.com/github/{{ repository.owner }}/{{ repository.name }}/maintainability)
