@@ -65,7 +65,7 @@ jobs:
         run: mkdir -p .build/coverage
       - name: Run tests with coverage
         run: composer test:coverage
-{% if ci.codeclimate or ci.codecov %}
+{% if ci.codeclimate or ci.coveralls %}
 
       # Upload artifact
       - name: Fix coverage path
@@ -106,15 +106,11 @@ jobs:
             {{ "${{ steps.download.outputs.download-path }}" }}/clover.xml:clover
 
 {% endif %}
-{% if ci.codecov %}
-      # codecov
-      - name: codecov report
-        uses: codecov/codecov-action@v3
+{% if ci.coveralls %}
+      # Coveralls
+      - name: Coveralls report
+        uses: coverallsapp/github-action@v2
         with:
-          token: {{ "${{ secrets.CODECOV_TOKEN }}" }}
-          files: |
-            {{ "${{ steps.download.outputs.download-path }}" }}/clover.xml
-          fail_ci_if_error: true
-          verbose: true
+          file: {{ "${{ steps.download.outputs.download-path }}" }}/clover.xml
 {% endif %}
 {% endif %}

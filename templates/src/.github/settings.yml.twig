@@ -89,8 +89,8 @@ branches:
           - 'Tests (PHP {{ php_version }} & lowest dependencies)'
 {% endfor %}
           - 'Test coverage'
-{% if ci.codecov %}
-          - 'codecov/project'
+{% if ci.coveralls %}
+          - 'coverage/coveralls'
 {% endif %}
       enforce_admins: false
       required_linear_history: true

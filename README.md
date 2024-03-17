@@ -2,7 +2,7 @@
 
 # Composer package template
 
-[![Coverage](https://img.shields.io/codecov/c/github/eliashaeussler/composer-package-template?logo=codecov&token=PZ4ICjI2Xb)](https://codecov.io/gh/eliashaeussler/composer-package-template)
+[![Coverage](https://img.shields.io/coverallsCoverage/github/eliashaeussler/composer-package-template?logo=coveralls)](https://coveralls.io/github/eliashaeussler/composer-package-template)
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/eliashaeussler/composer-package-template?logo=codeclimate)](https://codeclimate.com/github/eliashaeussler/composer-package-template/maintainability)
 [![CGL](https://img.shields.io/github/actions/workflow/status/eliashaeussler/composer-package-template/cgl.yaml?label=cgl&logo=github)](https://github.com/eliashaeussler/composer-package-template/actions/workflows/cgl.yaml)
 [![Tests](https://img.shields.io/github/actions/workflow/status/eliashaeussler/composer-package-template/tests.yaml?label=tests&logo=github)](https://github.com/eliashaeussler/composer-package-template/actions/workflows/tests.yaml)
@@ -19,7 +19,7 @@ Rector as well as preconfigured GitHub Actions and issue templates.
 |    | Feature                  | Tool                                                  |
 |----|--------------------------|-------------------------------------------------------|
 | 🏡 | Automatic code migration | [Rector](https://getrector.com/)                      |
-| 🦄 | Code coverage            | [Codecov](https://about.codecov.io/)                  |
+| 🦄 | Code coverage            | [Coveralls](https://coveralls.io/)                    |
 | 🧠 | Code quality gate        | [CodeClimate](https://codeclimate.com/)               |
 | 🧹 | Coding standards         | [PHP-CS-Fixer](https://cs.symfony.com/)               |
 | 🏎 | Continuous integration   | [GitHub Actions](https://github.com/features/actions) |
