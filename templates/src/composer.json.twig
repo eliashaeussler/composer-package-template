@@ -71,11 +71,12 @@
 		],
 		"lint:composer": "@fix:composer --dry-run",
 		"lint:editorconfig": "ec",
-		"lint:php": "@fix:php --dry-run"{% if dependencies.rector %},
+		"lint:php": "@fix:php --dry-run"{% if dependencies.rector or dependencies.phpstan or dependencies.phpunit %},{% endif %}
+{% if dependencies.rector %}
 		"migration": [
 			"@migration:rector"
 		],
-		"migration:rector": "rector process -c rector.php"{% if dependencies.phpstan %},{% endif %}
+		"migration:rector": "rector process -c rector.php"{% if dependencies.phpstan or dependencies.phpunit %},{% endif %}
 {% endif %}
 {% if dependencies.phpstan %}
 		"sca": [
