@@ -32,5 +32,6 @@ namespace EliasHaeussler\ComposerPackageTemplate\Enums;
 enum TokenIdentifier: string
 {
     case CodeClimate = 'codeclimate';
+    case Coveralls = 'coveralls';
     case GitHub = 'github';
 }
