@@ -41,6 +41,7 @@ final class InitializeRepositoryListener
 {
     public function __construct(
         private readonly Service\CodeClimateService $codeClimateService,
+        private readonly Service\CoverallsService $coverallsService,
         private readonly Service\GitHubService $gitHubService,
         private readonly ProjectBuilder\IO\InputReader $inputReader,
         private readonly ProjectBuilder\IO\Messenger $messenger,
@@ -65,9 +66,10 @@ final class InitializeRepositoryListener
         // Create GitHub repository
         $response = $this->createGitHubRepository($repository);
 
-        // Create CodeClimate repository
+        // Create coverage repositories
         if (Enums\CreateRepositoryResponse::Failed !== $response) {
             $this->createCodeClimateRepository($event->getBuildResult(), $repository);
+            $this->createCoverallsRepository($event->getBuildResult(), $repository);
         }
     }
 
@@ -126,6 +128,26 @@ final class InitializeRepositoryListener
         if ($this->inputReader->ask('Should we initialize CodeClimate?')) {
             $this->messenger->progress('Initializing CodeClimate...', IO\IOInterface::NORMAL);
             $this->codeClimateService->addRepository($repository);
+            $this->messenger->done();
+            $this->messenger->newLine();
+        }
+    }
+
+    private function createCoverallsRepository(
+        ProjectBuilder\Builder\BuildResult $result,
+        ValueObject\GitHubRepository $repository,
+    ): void {
+        $isCoverallsEnabled = (bool) $result->getInstructions()->getTemplateVariable('ci.coveralls');
+
+        if (!$isCoverallsEnabled || $repository->isPrivate()) {
+            return;
+        }
+
+        $this->messenger->newLine();
+
+        if ($this->inputReader->ask('Should we initialize Coveralls?')) {
+            $this->messenger->progress('Initializing Coveralls...', IO\IOInterface::NORMAL);
+            $this->coverallsService->addRepository($repository);
             $this->messenger->done();
             $this->messenger->newLine();
         }
