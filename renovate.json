@@ -26,5 +26,10 @@
 			],
 			"datasourceTemplate": "packagist"
 		}
-	]
+	],
+	"github-actions": {
+		"fileMatch": [
+			"^templates/src/\\.github/workflows/.+\\.yaml(\\.twig)?$"
+		]
+	}
 }
