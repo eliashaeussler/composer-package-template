@@ -7,6 +7,9 @@ services:
   EliasHaeussler\ComposerPackageTemplate\:
     resource: '../src/*'
 
+  EliasHaeussler\ComposerPackageTemplate\EventListener\CreateRepositoryListener:
+    tags: ['event.listener']
+
   EliasHaeussler\ComposerPackageTemplate\EventListener\InitializeRepositoryListener:
     tags: ['event.listener']
 

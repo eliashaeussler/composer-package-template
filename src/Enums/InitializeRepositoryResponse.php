@@ -21,45 +21,16 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace EliasHaeussler\ComposerPackageTemplate\Tests\Fixtures\Classes;
-
-use Symfony\Component\Process;
+namespace EliasHaeussler\ComposerPackageTemplate\Enums;
 
 /**
- * DummyExecutableFinder.
+ * InitializeRepositoryResponse.
  *
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-3.0-or-later
- *
- * @internal
  */
-final class DummyExecutableFinder extends Process\ExecutableFinder
+enum InitializeRepositoryResponse
 {
-    /**
-     * @var list<non-empty-string|null>
-     */
-    public array $executables = [];
-
-    /**
-     * @param array<mixed> $extraDirs
-     */
-    public function find(string $name, ?string $default = null, array $extraDirs = []): ?string
-    {
-        return array_shift($this->executables);
-    }
-
-    public function addFailingExecutable(): void
-    {
-        $this->executables[] = dirname(__DIR__, 2).'/Fixtures/Executables/failing.sh';
-    }
-
-    public function addSuccessfulExecutable(): void
-    {
-        $this->executables[] = dirname(__DIR__, 2).'/Fixtures/Executables/successful.sh';
-    }
-
-    public function addMissingExecutable(): void
-    {
-        $this->executables[] = null;
-    }
+    case Initialized;
+    case Failed;
 }
