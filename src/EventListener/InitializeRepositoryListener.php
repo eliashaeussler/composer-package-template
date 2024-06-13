@@ -28,8 +28,6 @@ use CPSIT\ProjectBuilder;
 use EliasHaeussler\ComposerPackageTemplate\Enums;
 use EliasHaeussler\ComposerPackageTemplate\Service;
 use EliasHaeussler\ComposerPackageTemplate\ValueObject;
-use Nyholm\Psr7;
-use Webmozart\Assert;
 
 /**
  * InitializeRepositoryListener.
@@ -40,116 +38,40 @@ use Webmozart\Assert;
 final class InitializeRepositoryListener
 {
     public function __construct(
-        private readonly Service\CodeClimateService $codeClimateService,
-        private readonly Service\CoverallsService $coverallsService,
-        private readonly Service\GitHubService $gitHubService,
+        private readonly Service\GitService $gitService,
         private readonly ProjectBuilder\IO\InputReader $inputReader,
         private readonly ProjectBuilder\IO\Messenger $messenger,
     ) {}
 
     public function __invoke(ProjectBuilder\Event\BuildStepProcessedEvent $event): void
     {
-        if (!($event->getStep() instanceof ProjectBuilder\Builder\Generator\Step\CollectBuildInstructionsStep)) {
+        $buildResult = $event->getBuildResult();
+
+        if (!($event->getStep() instanceof ProjectBuilder\Builder\Generator\Step\MirrorProcessedFilesStep)) {
             return;
         }
+
+        // Get repository data
+        $repository = $buildResult->getInstructions()->getTemplateVariable('repository.createResult.object');
+        $response = $buildResult->getInstructions()->getTemplateVariable('repository.createResult.response');
+
+        if (!($repository instanceof ValueObject\GitHubRepository)
+            || !($response instanceof Enums\CreateRepositoryResponse)
+            || Enums\CreateRepositoryResponse::Failed === $response
+            || !$this->gitService->isAvailable()
+        ) {
+            return;
+        }
+
+        // Remove repository data (since it's only necessary during runtime)
+        $buildResult->getInstructions()->addTemplateVariable('repository.createResult', null);
 
         $this->messenger->newLine();
 
-        // Early return if repo should not be generated
-        if (!$this->inputReader->ask('Should we create a new GitHub repository for you?')) {
-            return;
-        }
-
-        // Map properties to repository object
-        $repository = $this->createRepositoryFromBuildResult($event->getBuildResult());
-
-        // Create GitHub repository
-        $response = $this->createGitHubRepository($repository);
-
-        // Create coverage repositories
-        if (Enums\CreateRepositoryResponse::Failed !== $response) {
-            $this->createCodeClimateRepository($event->getBuildResult(), $repository);
-            $this->createCoverallsRepository($event->getBuildResult(), $repository);
-        }
-    }
-
-    private function createRepositoryFromBuildResult(
-        ProjectBuilder\Builder\BuildResult $buildResult,
-    ): ValueObject\GitHubRepository {
-        $instructions = $buildResult->getInstructions();
-
-        $owner = $instructions->getTemplateVariable('repository.owner');
-        $name = $instructions->getTemplateVariable('repository.name');
-        $url = $instructions->getTemplateVariable('repository.url');
-        $description = $instructions->getTemplateVariable('package.description');
-        $isPrivate = $this->inputReader->ask('Do you wish to keep the repository private for now?');
-
-        Assert\Assert::string($owner);
-        Assert\Assert::notEmpty($owner);
-        Assert\Assert::string($name);
-        Assert\Assert::notEmpty($name);
-        Assert\Assert::string($url);
-        Assert\Assert::string($description);
-
-        return new ValueObject\GitHubRepository($owner, $name, new Psr7\Uri($url), $description, $isPrivate);
-    }
-
-    private function createGitHubRepository(ValueObject\GitHubRepository $repository): Enums\CreateRepositoryResponse
-    {
-        $this->messenger->progress('Creating new GitHub repository...', IO\IOInterface::NORMAL);
-
-        $response = $this->gitHubService->createRepository($repository);
-
-        match ($response) {
-            Enums\CreateRepositoryResponse::Created => $this->messenger->done(),
-            Enums\CreateRepositoryResponse::Failed => $this->messenger->failed(),
-            Enums\CreateRepositoryResponse::AlreadyExists => $this->messenger->writeWithEmoji(
-                ProjectBuilder\IO\Emoji::WhiteHeavyCheckMark->value,
-                'Creating new GitHub repository... <comment>Already exists</comment>',
-                true,
-            ),
-        };
-
-        return $response;
-    }
-
-    private function createCodeClimateRepository(
-        ProjectBuilder\Builder\BuildResult $result,
-        ValueObject\GitHubRepository $repository,
-    ): void {
-        $isCodeClimateEnabled = (bool) $result->getInstructions()->getTemplateVariable('ci.codeclimate');
-
-        if (!$isCodeClimateEnabled || $repository->isPrivate()) {
-            return;
-        }
-
-        $this->messenger->newLine();
-
-        if ($this->inputReader->ask('Should we initialize CodeClimate?')) {
-            $this->messenger->progress('Initializing CodeClimate...', IO\IOInterface::NORMAL);
-            $this->codeClimateService->addRepository($repository);
+        if ($this->inputReader->ask('Should we initialize a local Git repository?')) {
+            $this->messenger->progress('Initializing local repository...', IO\IOInterface::NORMAL);
+            $this->gitService->initializeRepository($repository, $buildResult->getWrittenDirectory());
             $this->messenger->done();
-            $this->messenger->newLine();
-        }
-    }
-
-    private function createCoverallsRepository(
-        ProjectBuilder\Builder\BuildResult $result,
-        ValueObject\GitHubRepository $repository,
-    ): void {
-        $isCoverallsEnabled = (bool) $result->getInstructions()->getTemplateVariable('ci.coveralls');
-
-        if (!$isCoverallsEnabled || $repository->isPrivate()) {
-            return;
-        }
-
-        $this->messenger->newLine();
-
-        if ($this->inputReader->ask('Should we initialize Coveralls?')) {
-            $this->messenger->progress('Initializing Coveralls...', IO\IOInterface::NORMAL);
-            $this->coverallsService->addRepository($repository);
-            $this->messenger->done();
-            $this->messenger->newLine();
         }
     }
 }

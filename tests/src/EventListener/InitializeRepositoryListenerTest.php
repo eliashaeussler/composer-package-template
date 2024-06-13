@@ -30,6 +30,7 @@ use Nyholm\Psr7;
 use PHPUnit\Framework;
 use Symfony\Component\EventDispatcher;
 use Symfony\Component\ExpressionLanguage;
+use Symfony\Component\Filesystem;
 use Twig\Environment;
 use Twig\Loader;
 
@@ -42,20 +43,21 @@ use Twig\Loader;
 #[Framework\Attributes\CoversClass(Src\EventListener\InitializeRepositoryListener::class)]
 final class InitializeRepositoryListenerTest extends Framework\TestCase
 {
-    use Src\Tests\ClientMockTrait;
-
     private IO\BufferIO $io;
-    private Src\Resource\TokenStorage $tokenStorage;
+    private Src\Tests\Fixtures\Classes\DummyExecutableFinder $executableFinder;
+    private Filesystem\Filesystem $filesystem;
     private ProjectBuilder\Event\BuildStepProcessedEvent $event;
     private Src\EventListener\InitializeRepositoryListener $subject;
 
     protected function setUp(): void
     {
         $this->io = new IO\BufferIO();
+        $this->executableFinder = new Src\Tests\Fixtures\Classes\DummyExecutableFinder();
+        $this->filesystem = new Filesystem\Filesystem();
 
-        $client = $this->getPreparedClient();
         $messenger = ProjectBuilder\IO\Messenger::create($this->io);
         $inputReader = $messenger->createInputReader();
+        $processFactory = new Src\Resource\ProcessFactory($this->executableFinder);
 
         $instructions = new ProjectBuilder\Builder\BuildInstructions(
             new ProjectBuilder\Builder\Config\Config(
@@ -68,25 +70,28 @@ final class InitializeRepositoryListenerTest extends Framework\TestCase
             ),
             'foo',
         );
-        $instructions->addTemplateVariable('repository.owner', 'foo');
-        $instructions->addTemplateVariable('repository.name', 'baz');
-        $instructions->addTemplateVariable('repository.url', 'https://github.com/foo/baz');
-        $instructions->addTemplateVariable('package.description', 'foo baz');
-        $instructions->addTemplateVariable('ci.codeclimate', true);
-        $instructions->addTemplateVariable('ci.coveralls', true);
+        $instructions->addTemplateVariable('repository.createResult', [
+            'object' => new Src\ValueObject\GitHubRepository(
+                'foo',
+                'baz',
+                new Psr7\Uri('https://github.com/foo/baz'),
+                'foo baz',
+                false,
+            ),
+            'response' => Src\Enums\CreateRepositoryResponse::Created,
+        ]);
 
-        $this->tokenStorage = new Src\Resource\TokenStorage();
         $this->event = new ProjectBuilder\Event\BuildStepProcessedEvent(
-            new ProjectBuilder\Builder\Generator\Step\CollectBuildInstructionsStep(
+            new ProjectBuilder\Builder\Generator\Step\MirrorProcessedFilesStep(
                 new ExpressionLanguage\ExpressionLanguage(),
-                $messenger,
-                new ProjectBuilder\Builder\Generator\Step\Interaction\InteractionFactory([]),
+                $this->filesystem,
                 new ProjectBuilder\Twig\Renderer(
                     new Environment(
                         new Loader\ArrayLoader(),
                     ),
                     new EventDispatcher\EventDispatcher(),
                 ),
+                $messenger,
             ),
             new ProjectBuilder\Builder\BuildResult(
                 $instructions,
@@ -95,30 +100,15 @@ final class InitializeRepositoryListenerTest extends Framework\TestCase
         );
 
         $this->subject = new Src\EventListener\InitializeRepositoryListener(
-            new Src\Service\CodeClimateService(
-                $client,
-                $inputReader,
-                $messenger,
-                $this->tokenStorage,
-            ),
-            new Src\Service\CoverallsService(
-                $client,
-                $inputReader,
-                $messenger,
-                $this->tokenStorage,
-            ),
-            new Src\Service\GitHubService(
-                $client,
-                $inputReader,
-                $messenger,
-                new Src\Resource\ProcessFactory(
-                    new Src\Tests\Fixtures\Classes\DummyExecutableFinder(),
-                ),
-                $this->tokenStorage,
+            new Src\Service\GitService(
+                $processFactory,
             ),
             $inputReader,
             $messenger,
         );
+
+        $this->filesystem->mkdir($this->event->getBuildResult()->getWrittenDirectory());
+        $this->executableFinder->addSuccessfulExecutable();
     }
 
     #[Framework\Attributes\Test]
@@ -136,134 +126,69 @@ final class InitializeRepositoryListenerTest extends Framework\TestCase
     }
 
     #[Framework\Attributes\Test]
+    public function invokeReturnsEarlyIfStoredCreateResultIsInvalid(): void
+    {
+        $instructions = $this->event->getBuildResult()->getInstructions();
+        $instructions->addTemplateVariable('repository.createResult', 'foo');
+
+        ($this->subject)($this->event);
+
+        self::assertStringNotContainsString('Should we initialize a local Git repository?', $this->io->getOutput());
+    }
+
+    #[Framework\Attributes\Test]
+    public function invokeReturnsEarlyIfStoredCreateResponseIsFailed(): void
+    {
+        $instructions = $this->event->getBuildResult()->getInstructions();
+        $instructions->addTemplateVariable(
+            'repository.createResult.response',
+            Src\Enums\CreateRepositoryResponse::Failed,
+        );
+
+        ($this->subject)($this->event);
+
+        self::assertStringNotContainsString('Should we initialize a local Git repository?', $this->io->getOutput());
+    }
+
+    #[Framework\Attributes\Test]
+    public function invokeReturnsEarlyIfGitBinaryIsNotAvailable(): void
+    {
+        $this->executableFinder->executables = [null];
+
+        ($this->subject)($this->event);
+
+        self::assertStringNotContainsString('Should we initialize a local Git repository?', $this->io->getOutput());
+    }
+
+    #[Framework\Attributes\Test]
     public function invokeReturnsEarlyIfUserAbortsRepositoryCreation(): void
     {
         $this->io->setUserInputs(['no']);
 
         ($this->subject)($this->event);
 
-        self::assertStringNotContainsString('Creating new GitHub repository', $this->io->getOutput());
+        self::assertStringContainsString('Should we initialize a local Git repository?', $this->io->getOutput());
+        self::assertStringNotContainsString('Initializing local repository...', $this->io->getOutput());
     }
 
     #[Framework\Attributes\Test]
-    public function invokeCreatesGitHubRepositoryAndSkipsCoverageRepositoriesIfGitHubRequestFails(): void
+    public function invokeInitializesLocalRepository(): void
     {
-        $this->io->setUserInputs(['yes', 'yes']);
-
-        $this->tokenStorage->set(Src\Enums\TokenIdentifier::GitHub, 'foo');
-        $this->mockHandler->append(new Psr7\Response(404), new Psr7\Response(400));
+        $this->io->setUserInputs(['yes']);
 
         ($this->subject)($this->event);
 
         $output = $this->io->getOutput();
 
-        self::assertStringContainsString('Do you wish to keep the repository private for now?', $output);
-        self::assertStringContainsString('Creating new GitHub repository...', $output);
-        self::assertStringNotContainsString('Should we initialize CodeClimate?', $output);
-        self::assertStringNotContainsString('Should we initialize Coveralls?', $output);
+        self::assertStringContainsString('Should we initialize a local Git repository?', $output);
+        self::assertStringContainsString('Initializing local repository...', $output);
+        self::assertNull(
+            $this->event->getBuildResult()->getInstructions()->getTemplateVariable('repository.createResult'),
+        );
     }
 
-    #[Framework\Attributes\Test]
-    public function invokeCreatesGitHubRepositoryAndSkipsCoverageRepositoriesOnPrivateRepository(): void
+    protected function tearDown(): void
     {
-        $this->io->setUserInputs(['yes', 'yes', 'yes']);
-
-        $this->tokenStorage->set(Src\Enums\TokenIdentifier::GitHub, 'foo');
-        $this->mockHandler->append(new Psr7\Response(200));
-
-        ($this->subject)($this->event);
-
-        $output = $this->io->getOutput();
-
-        self::assertStringContainsString('Do you wish to keep the repository private for now?', $output);
-        self::assertStringContainsString('Creating new GitHub repository...', $output);
-        self::assertStringNotContainsString('Should we initialize CodeClimate?', $output);
-        self::assertStringNotContainsString('Should we initialize Coveralls?', $output);
-    }
-
-    #[Framework\Attributes\Test]
-    public function invokeCreatesGitHubRepositoryAndSkipsCodeClimateRepositoryIfCodeClimateIsDisabled(): void
-    {
-        $this->io->setUserInputs(['yes', 'yes']);
-
-        $instructions = $this->event->getBuildResult()->getInstructions();
-        $instructions->addTemplateVariable('ci.codeclimate', false);
-        $instructions->addTemplateVariable('ci.coveralls', false);
-
-        $this->tokenStorage->set(Src\Enums\TokenIdentifier::GitHub, 'foo');
-        $this->mockHandler->append(new Psr7\Response(200));
-
-        ($this->subject)($this->event);
-
-        $output = $this->io->getOutput();
-
-        self::assertStringContainsString('Do you wish to keep the repository private for now?', $output);
-        self::assertStringContainsString('Creating new GitHub repository...', $output);
-        self::assertStringNotContainsString('Should we initialize CodeClimate?', $output);
-    }
-
-    #[Framework\Attributes\Test]
-    public function invokeCreatesGitHubRepositoryAndAddsCodeClimateRepository(): void
-    {
-        $this->io->setUserInputs(['yes', 'no']);
-
-        $instructions = $this->event->getBuildResult()->getInstructions();
-        $instructions->addTemplateVariable('ci.coveralls', false);
-
-        $this->tokenStorage->set(Src\Enums\TokenIdentifier::GitHub, 'foo');
-        $this->tokenStorage->set(Src\Enums\TokenIdentifier::CodeClimate, 'foo');
-        $this->mockHandler->append(new Psr7\Response(200), new Psr7\Response(200));
-
-        ($this->subject)($this->event);
-
-        $output = $this->io->getOutput();
-
-        self::assertStringContainsString('Do you wish to keep the repository private for now?', $output);
-        self::assertStringContainsString('Creating new GitHub repository...', $output);
-        self::assertStringContainsString('Should we initialize CodeClimate?', $output);
-        self::assertStringContainsString('Initializing CodeClimate...', $output);
-    }
-
-    #[Framework\Attributes\Test]
-    public function invokeCreatesGitHubRepositoryAndSkipsCoverallsRepositoryIfCoverallsIsDisabled(): void
-    {
-        $this->io->setUserInputs(['yes', 'yes']);
-
-        $instructions = $this->event->getBuildResult()->getInstructions();
-        $instructions->addTemplateVariable('ci.codeclimate', false);
-        $instructions->addTemplateVariable('ci.coveralls', false);
-
-        $this->tokenStorage->set(Src\Enums\TokenIdentifier::GitHub, 'foo');
-        $this->mockHandler->append(new Psr7\Response(200));
-
-        ($this->subject)($this->event);
-
-        $output = $this->io->getOutput();
-
-        self::assertStringContainsString('Do you wish to keep the repository private for now?', $output);
-        self::assertStringContainsString('Creating new GitHub repository...', $output);
-        self::assertStringNotContainsString('Should we initialize Coveralls?', $output);
-    }
-
-    #[Framework\Attributes\Test]
-    public function invokeCreatesGitHubRepositoryAndAddsCoverallsRepository(): void
-    {
-        $this->io->setUserInputs(['yes', 'no']);
-
-        $instructions = $this->event->getBuildResult()->getInstructions();
-        $instructions->addTemplateVariable('ci.codeclimate', false);
-
-        $this->tokenStorage->set(Src\Enums\TokenIdentifier::GitHub, 'foo');
-        $this->tokenStorage->set(Src\Enums\TokenIdentifier::Coveralls, 'foo');
-        $this->mockHandler->append(new Psr7\Response(200), new Psr7\Response(200));
-
-        ($this->subject)($this->event);
-
-        $output = $this->io->getOutput();
-
-        self::assertStringContainsString('Do you wish to keep the repository private for now?', $output);
-        self::assertStringContainsString('Creating new GitHub repository...', $output);
-        self::assertStringContainsString('Should we initialize Coveralls?', $output);
-        self::assertStringContainsString('Initializing Coveralls...', $output);
+        $this->filesystem->remove($this->event->getBuildResult()->getWrittenDirectory());
     }
 }
