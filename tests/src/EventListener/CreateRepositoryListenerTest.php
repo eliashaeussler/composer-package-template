@@ -90,6 +90,7 @@ final class CreateRepositoryListenerTest extends Framework\TestCase
                     ),
                     new EventDispatcher\EventDispatcher(),
                 ),
+                new EventDispatcher\EventDispatcher(),
             ),
             new ProjectBuilder\Builder\BuildResult(
                 $instructions,
