@@ -2,7 +2,8 @@ repository:
   name: '{{ repository.name }}'
   description: '{{ package.description }}'
   topics: '{{ repository.topics }}'
-  private: false
+  private: {% if repository.createResult.object.private ?? false %}true{% else %}false{% endif %}
+
   has_issues: true
   has_projects: false
   has_wiki: false
