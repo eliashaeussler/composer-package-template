@@ -36,6 +36,7 @@ steps:
     options:
       command: "composer update && composer normalize"
       allowFailure: true
+      required: false
 properties:
   # Package
   - identifier: package
