@@ -80,7 +80,8 @@ rulesets:
     conditions:
       ref_name:
         include:
-          - ~DEFAULT_BRANCH
+          - '~DEFAULT_BRANCH'
+        exclude: []
     rules:
       - type: deletion
       - type: non_fast_forward
