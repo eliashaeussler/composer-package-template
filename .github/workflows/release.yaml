@@ -4,15 +4,19 @@ on:
     tags:
       - '*'
 
+permissions:
+  contents: write
+
 jobs:
   # Job: Create release
   release:
     name: Create release
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get-version.outputs.version }}
+      url: ${{ steps.create-release.outputs.url }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       # Check if tag is valid
       - name: Check tag
@@ -21,8 +25,15 @@ jobs:
             exit 1
           fi
 
+      - name: Determine version
+        id: get-version
+        run: echo "version=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
+
       # Create release
       - name: Create release
-        uses: ncipollo/release-action@v1
-        with:
-          generateReleaseNotes: true
+        id: create-release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create ${{ steps.get-version.outputs.version }} --generate-notes
+          echo "url=$(gh release view ${{ steps.get-version.outputs.version }} --json url -q .url)" >> $GITHUB_OUTPUT
