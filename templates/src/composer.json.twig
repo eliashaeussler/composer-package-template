@@ -28,7 +28,7 @@
 		"ergebnis/composer-normalize": "^2.30"{% if dependencies.phpstan or dependencies.phpunit %},{% endif %}
 {% if dependencies.phpstan %}
 		"phpstan/extension-installer": "^1.2"{% if dependencies.phpunit %},
-		"phpstan/phpstan-phpunit": "^1.1",{% endif %}
+		"phpstan/phpstan-phpunit": "^2.0",{% endif %}
 {% endif %}
 {% if dependencies.phpunit %}
 		"phpunit/phpunit": "{% if '8.1' in dependencies.php %}^10.2{% else %}^11.0{% endif %}"
