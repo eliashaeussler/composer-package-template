@@ -31,8 +31,8 @@
 		"friendsoftwig/twigcs": "^6.2",
 		"j13k/yaml-lint": "^1.1",
 		"phpstan/extension-installer": "^1.3",
-		"phpstan/phpstan-phpunit": "^1.3",
-		"phpstan/phpstan-webmozart-assert": "^1.2",
+		"phpstan/phpstan-phpunit": "^2.0",
+		"phpstan/phpstan-webmozart-assert": "^2.0",
 		"phpunit/phpunit": "^10.2 || ^11.0",
 		"symfony/expression-language": "^5.4 || ^6.0 || ^7.0"
 	},
