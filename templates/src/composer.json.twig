@@ -20,14 +20,14 @@
 		"armin/editorconfig-cli": "^1.8 || ^2.0",
 		"eliashaeussler/php-cs-fixer-config": "^2.0",
 {% if dependencies.phpstan %}
-		"eliashaeussler/phpstan-config": "^2.0",
+		"eliashaeussler/phpstan-config": "^2.6",
 {% endif %}
 {% if dependencies.rector %}
-		"eliashaeussler/rector-config": "^3.0",
+		"eliashaeussler/rector-config": "^3.1",
 {% endif %}
 		"ergebnis/composer-normalize": "^2.30"{% if dependencies.phpstan or dependencies.phpunit %},{% endif %}
 {% if dependencies.phpstan %}
-		"phpstan/extension-installer": "^1.2"{% if dependencies.phpunit %},
+		"phpstan/extension-installer": "^1.4"{% if dependencies.phpunit %},
 		"phpstan/phpstan-phpunit": "^2.0",{% endif %}
 {% endif %}
 {% if dependencies.phpunit %}
