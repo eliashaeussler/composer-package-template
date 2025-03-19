@@ -33,5 +33,6 @@ return static function (RectorConfig $rectorConfig): void {
         )
         ->withPHPUnit()
         ->apply()
+        ->cacheDirectory('.build/cache/rector')
     ;
 };
