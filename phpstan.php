@@ -30,5 +30,6 @@ return PHPStanConfig\Config\Config::create(__DIR__)
     )
     ->withBleedingEdge()
     ->maxLevel()
+    ->useCacheDir('.build/cache/phpstan')
     ->toArray()
 ;
