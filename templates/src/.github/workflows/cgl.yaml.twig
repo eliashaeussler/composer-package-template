@@ -26,7 +26,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: {{ dependencies.php|sort|last }}
-          tools: composer:v2, composer-require-checker, composer-unused, cs2pr
+          tools: composer:v2, cs2pr
         env:
           GITHUB_TOKEN: {{ "${{ secrets.GITHUB_TOKEN }}" }}
 
@@ -38,11 +38,9 @@ jobs:
       - name: Install Composer dependencies
         uses: ramsey/composer-install@v3
 
-      # Check Composer dependencies
-      - name: Check dependencies
-        run: composer-require-checker check
-      - name: Check for unused dependencies
-        run: composer-unused
+      # Analyze
+      - name: Analyze dependencies
+        run: composer analyze:dependencies
 
       # Linting
       - name: Lint composer.json

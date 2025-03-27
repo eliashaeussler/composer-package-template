@@ -16,16 +16,17 @@ Rector as well as preconfigured GitHub Actions and issue templates.
 
 ## 🚀 Features
 
-|    | Feature                  | Tool                                                  |
-|----|--------------------------|-------------------------------------------------------|
-| 🏡 | Automatic code migration | [Rector](https://getrector.com/)                      |
-| 🦄 | Code coverage            | [Coveralls](https://coveralls.io/)                    |
-| 🧠 | Code quality gate        | [CodeClimate](https://codeclimate.com/)               |
-| 🧹 | Coding standards         | [PHP-CS-Fixer](https://cs.symfony.com/)               |
-| 🏎 | Continuous integration   | [GitHub Actions](https://github.com/features/actions) |
-| 💅 | Dependency handling      | [Renovate](https://renovatebot.com/)                  |
-| 🔍 | Static code analysis     | [PHPStan](https://phpstan.org/)                       |
-| 💡 | Unit testing             | [PHPUnit](https://phpunit.de/)                        |
+|    | Feature                  | Tool                                                                                         |
+|----|--------------------------|----------------------------------------------------------------------------------------------|
+| 🏡 | Automatic code migration | [Rector](https://getrector.com/)                                                             |
+| 🦄 | Code coverage            | [Coveralls](https://coveralls.io/)                                                           |
+| 🧠 | Code quality gate        | [CodeClimate](https://codeclimate.com/)                                                      |
+| 🧹 | Coding standards         | [PHP-CS-Fixer](https://cs.symfony.com/)                                                      |
+| 🏎 | Continuous integration   | [GitHub Actions](https://github.com/features/actions)                                        |
+| 📦 | Dependency analysis      | [Composer Dependency Analyser](https://github.com/shipmonk-rnd/composer-dependency-analyser) |
+| 💅 | Dependency handling      | [Renovate](https://renovatebot.com/)                                                         |
+| 🔍 | Static code analysis     | [PHPStan](https://phpstan.org/)                                                              |
+| 💡 | Unit testing             | [PHPUnit](https://phpunit.de/)                                                               |
 
 ## 🔥 Installation
 
