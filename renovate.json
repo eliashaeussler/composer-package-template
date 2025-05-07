@@ -9,8 +9,8 @@
 	"customManagers": [
 		{
 			"customType": "regex",
-			"fileMatch": [
-				"^config\\.yaml$"
+			"managerFilePatterns": [
+				"/^config\\.yaml$/"
 			],
 			"matchStrings": [
 				"value: '(?<currentValue>[^']+)' # renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)"
@@ -18,8 +18,8 @@
 		},
 		{
 			"customType": "regex",
-			"fileMatch": [
-				"^templates/src/composer\\.json\\.twig$"
+			"managerFilePatterns": [
+				"/^templates/src/composer\\.json\\.twig$/"
 			],
 			"matchStrings": [
 				"\"(?<depName>[\\w-]+/[\\w-]+)\": \"(?<currentValue>[^\"\\s]+)\""
@@ -28,8 +28,8 @@
 		}
 	],
 	"github-actions": {
-		"fileMatch": [
-			"^templates/src/\\.github/workflows/.+\\.yaml(\\.twig)?$"
+		"managerFilePatterns": [
+			"/^templates/src/\\.github/workflows/.+\\.yaml(\\.twig)?$/"
 		]
 	}
 }
