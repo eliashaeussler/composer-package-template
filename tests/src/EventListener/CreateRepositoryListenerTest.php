@@ -75,7 +75,6 @@ final class CreateRepositoryListenerTest extends Framework\TestCase
         $instructions->addTemplateVariable('repository.name', 'baz');
         $instructions->addTemplateVariable('repository.url', 'https://github.com/foo/baz');
         $instructions->addTemplateVariable('package.description', 'foo baz');
-        $instructions->addTemplateVariable('ci.codeclimate', true);
         $instructions->addTemplateVariable('ci.coveralls', true);
 
         $this->tokenStorage = new Src\Resource\TokenStorage();
@@ -99,12 +98,6 @@ final class CreateRepositoryListenerTest extends Framework\TestCase
         );
 
         $this->subject = new Src\EventListener\CreateRepositoryListener(
-            new Src\Service\CodeClimateService(
-                $client,
-                $inputReader,
-                $messenger,
-                $this->tokenStorage,
-            ),
             new Src\Service\CoverallsService(
                 $client,
                 $inputReader,
@@ -161,7 +154,6 @@ final class CreateRepositoryListenerTest extends Framework\TestCase
 
         self::assertStringContainsString('Do you wish to keep the repository private for now?', $output);
         self::assertStringContainsString('Creating new GitHub repository...', $output);
-        self::assertStringNotContainsString('Should we initialize CodeClimate?', $output);
         self::assertStringNotContainsString('Should we initialize Coveralls?', $output);
     }
 
@@ -179,51 +171,7 @@ final class CreateRepositoryListenerTest extends Framework\TestCase
 
         self::assertStringContainsString('Do you wish to keep the repository private for now?', $output);
         self::assertStringContainsString('Creating new GitHub repository...', $output);
-        self::assertStringNotContainsString('Should we initialize CodeClimate?', $output);
         self::assertStringNotContainsString('Should we initialize Coveralls?', $output);
-    }
-
-    #[Framework\Attributes\Test]
-    public function invokeCreatesGitHubRepositoryAndSkipsCodeClimateRepositoryIfCodeClimateIsDisabled(): void
-    {
-        $this->io->setUserInputs(['yes', 'yes']);
-
-        $instructions = $this->event->getBuildResult()->getInstructions();
-        $instructions->addTemplateVariable('ci.codeclimate', false);
-        $instructions->addTemplateVariable('ci.coveralls', false);
-
-        $this->tokenStorage->set(Src\Enums\TokenIdentifier::GitHub, 'foo');
-        $this->mockHandler->append(new Psr7\Response(200));
-
-        ($this->subject)($this->event);
-
-        $output = $this->io->getOutput();
-
-        self::assertStringContainsString('Do you wish to keep the repository private for now?', $output);
-        self::assertStringContainsString('Creating new GitHub repository...', $output);
-        self::assertStringNotContainsString('Should we initialize CodeClimate?', $output);
-    }
-
-    #[Framework\Attributes\Test]
-    public function invokeCreatesGitHubRepositoryAndAddsCodeClimateRepository(): void
-    {
-        $this->io->setUserInputs(['yes', 'no']);
-
-        $instructions = $this->event->getBuildResult()->getInstructions();
-        $instructions->addTemplateVariable('ci.coveralls', false);
-
-        $this->tokenStorage->set(Src\Enums\TokenIdentifier::GitHub, 'foo');
-        $this->tokenStorage->set(Src\Enums\TokenIdentifier::CodeClimate, 'foo');
-        $this->mockHandler->append(new Psr7\Response(200), new Psr7\Response(200));
-
-        ($this->subject)($this->event);
-
-        $output = $this->io->getOutput();
-
-        self::assertStringContainsString('Do you wish to keep the repository private for now?', $output);
-        self::assertStringContainsString('Creating new GitHub repository...', $output);
-        self::assertStringContainsString('Should we initialize CodeClimate?', $output);
-        self::assertStringContainsString('Initializing CodeClimate...', $output);
     }
 
     #[Framework\Attributes\Test]
@@ -232,7 +180,6 @@ final class CreateRepositoryListenerTest extends Framework\TestCase
         $this->io->setUserInputs(['yes', 'yes']);
 
         $instructions = $this->event->getBuildResult()->getInstructions();
-        $instructions->addTemplateVariable('ci.codeclimate', false);
         $instructions->addTemplateVariable('ci.coveralls', false);
 
         $this->tokenStorage->set(Src\Enums\TokenIdentifier::GitHub, 'foo');
@@ -251,9 +198,6 @@ final class CreateRepositoryListenerTest extends Framework\TestCase
     public function invokeCreatesGitHubRepositoryAndAddsCoverallsRepository(): void
     {
         $this->io->setUserInputs(['yes', 'no']);
-
-        $instructions = $this->event->getBuildResult()->getInstructions();
-        $instructions->addTemplateVariable('ci.codeclimate', false);
 
         $this->tokenStorage->set(Src\Enums\TokenIdentifier::GitHub, 'foo');
         $this->tokenStorage->set(Src\Enums\TokenIdentifier::Coveralls, 'foo');

@@ -5,9 +5,6 @@
 {% if ci.coveralls %}
 [![Coverage](https://img.shields.io/coverallsCoverage/github/{{ repository.owner }}/{{ repository.name }}?logo=coveralls)](https://coveralls.io/github/{{ repository.owner }}/{{ repository.name }})
 {% endif %}
-{% if ci.codeclimate %}
-[![Maintainability](https://img.shields.io/codeclimate/maintainability/{{ repository.owner }}/{{ repository.name }}?logo=codeclimate)](https://codeclimate.com/github/{{ repository.owner }}/{{ repository.name }}/maintainability)
-{% endif %}
 {% if ci.github_actions %}
 [![CGL](https://img.shields.io/github/actions/workflow/status/{{ repository.owner }}/{{ repository.name }}/cgl.yaml?label=cgl&logo=github)]({{ repository.url }}/actions/workflows/cgl.yaml)
 {% if dependencies.phpunit %}

@@ -126,11 +126,6 @@ properties:
         name: Should the package use some <comment>GitHub Actions</comment>?
         type: question
         defaultValue: true
-      - identifier: codeclimate
-        name: Do you want to integrate <comment>CodeClimate</comment>?
-        type: question
-        if: 'ci["github_actions"] && dependencies["phpunit"]'
-        defaultValue: true
       - identifier: coveralls
         name: Should <comment>Coveralls</comment> monitor your code coverage?
         type: question
