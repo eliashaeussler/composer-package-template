@@ -17,13 +17,13 @@
 		"php": "{{ dependencies.php|sort|map(version => "~#{version}.0")|join(' || ') }}"
 	},
 	"require-dev": {
-		"armin/editorconfig-cli": "^1.8 || ^2.0",
-		"eliashaeussler/php-cs-fixer-config": "^2.0",
+		"armin/editorconfig-cli": "^2.0",
+		"eliashaeussler/php-cs-fixer-config": "^3.0",
 {% if dependencies.phpstan %}
-		"eliashaeussler/phpstan-config": "^2.6",
+		"eliashaeussler/phpstan-config": "^4.0",
 {% endif %}
 {% if dependencies.rector %}
-		"eliashaeussler/rector-config": "^3.1.1",
+		"eliashaeussler/rector-config": "^4.0",
 {% endif %}
 		"ergebnis/composer-normalize": "^2.30",
 {% if dependencies.phpstan %}
@@ -33,7 +33,7 @@
 {% endif %}
 {% endif %}
 {% if dependencies.phpunit %}
-		"phpunit/phpunit": "{% if '8.1' in dependencies.php %}^10.2{% elseif '8.2' in dependencies.php %}^11.0{% else %}^12.0{% endif %}",
+		"phpunit/phpunit": "{% if '8.2' in dependencies.php %}^11.5{% else %}^12.5{% endif %}",
 {% endif %}
 		"shipmonk/composer-dependency-analyser": "^1.8"
 	},

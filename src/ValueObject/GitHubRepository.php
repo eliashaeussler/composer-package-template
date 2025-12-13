@@ -31,18 +31,18 @@ use Psr\Http\Message;
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-3.0-or-later
  */
-final class GitHubRepository
+final readonly class GitHubRepository
 {
     /**
      * @param non-empty-string $owner
      * @param non-empty-string $name
      */
     public function __construct(
-        private readonly string $owner,
-        private readonly string $name,
-        private readonly Message\UriInterface $url,
-        private readonly string $description = '',
-        private readonly bool $private = false,
+        private string $owner,
+        private string $name,
+        private Message\UriInterface $url,
+        private string $description = '',
+        private bool $private = false,
     ) {}
 
     /**
