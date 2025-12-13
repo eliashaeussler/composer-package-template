@@ -41,17 +41,17 @@ use function sprintf;
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-3.0-or-later
  */
-final class CoverallsService
+final readonly class CoverallsService
 {
     private const API_TOKEN_URL = 'https://coveralls.io/account';
 
-    private readonly Psr7\Uri $baseUrl;
+    private Psr7\Uri $baseUrl;
 
     public function __construct(
-        private readonly Client\ClientInterface $client,
-        private readonly ProjectBuilder\IO\InputReader $inputReader,
-        private readonly ProjectBuilder\IO\Messenger $messenger,
-        private readonly Resource\TokenStorage $tokenStorage,
+        private Client\ClientInterface $client,
+        private ProjectBuilder\IO\InputReader $inputReader,
+        private ProjectBuilder\IO\Messenger $messenger,
+        private Resource\TokenStorage $tokenStorage,
     ) {
         $this->baseUrl = new Psr7\Uri('https://coveralls.io/api');
     }

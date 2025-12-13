@@ -36,10 +36,10 @@ use function trim;
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-3.0-or-later
  */
-final class GitService
+final readonly class GitService
 {
     public function __construct(
-        private readonly Resource\ProcessFactory $processFactory,
+        private Resource\ProcessFactory $processFactory,
     ) {}
 
     public function initializeRepository(

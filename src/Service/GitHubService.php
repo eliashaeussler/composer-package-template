@@ -41,19 +41,19 @@ use function sprintf;
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-3.0-or-later
  */
-final class GitHubService
+final readonly class GitHubService
 {
     private const API_VERSION = '2022-11-28';
     private const API_TOKEN_URL = 'https://github.com/settings/tokens/new?scopes=repo';
 
-    private readonly Message\UriInterface $baseUrl;
+    private Message\UriInterface $baseUrl;
 
     public function __construct(
-        private readonly Client\ClientInterface $client,
-        private readonly ProjectBuilder\IO\InputReader $inputReader,
-        private readonly ProjectBuilder\IO\Messenger $messenger,
-        private readonly Resource\ProcessFactory $processFactory,
-        private readonly Resource\TokenStorage $tokenStorage,
+        private Client\ClientInterface $client,
+        private ProjectBuilder\IO\InputReader $inputReader,
+        private ProjectBuilder\IO\Messenger $messenger,
+        private Resource\ProcessFactory $processFactory,
+        private Resource\TokenStorage $tokenStorage,
     ) {
         $this->baseUrl = new Psr7\Uri('https://api.github.com');
     }

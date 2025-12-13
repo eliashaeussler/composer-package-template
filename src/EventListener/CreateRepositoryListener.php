@@ -37,13 +37,13 @@ use Webmozart\Assert;
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-3.0-or-later
  */
-final class CreateRepositoryListener
+final readonly class CreateRepositoryListener
 {
     public function __construct(
-        private readonly Service\CoverallsService $coverallsService,
-        private readonly Service\GitHubService $gitHubService,
-        private readonly ProjectBuilder\IO\InputReader $inputReader,
-        private readonly ProjectBuilder\IO\Messenger $messenger,
+        private Service\CoverallsService $coverallsService,
+        private Service\GitHubService $gitHubService,
+        private ProjectBuilder\IO\InputReader $inputReader,
+        private ProjectBuilder\IO\Messenger $messenger,
     ) {}
 
     public function __invoke(ProjectBuilder\Event\BuildStepProcessedEvent $event): void

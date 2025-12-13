@@ -35,12 +35,12 @@ use EliasHaeussler\ComposerPackageTemplate\ValueObject;
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-3.0-or-later
  */
-final class InitializeRepositoryListener
+final readonly class InitializeRepositoryListener
 {
     public function __construct(
-        private readonly Service\GitService $gitService,
-        private readonly ProjectBuilder\IO\InputReader $inputReader,
-        private readonly ProjectBuilder\IO\Messenger $messenger,
+        private Service\GitService $gitService,
+        private ProjectBuilder\IO\InputReader $inputReader,
+        private ProjectBuilder\IO\Messenger $messenger,
     ) {}
 
     public function __invoke(ProjectBuilder\Event\BuildStepProcessedEvent $event): void
