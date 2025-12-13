@@ -40,7 +40,6 @@ use Webmozart\Assert;
 final class CreateRepositoryListener
 {
     public function __construct(
-        private readonly Service\CodeClimateService $codeClimateService,
         private readonly Service\CoverallsService $coverallsService,
         private readonly Service\GitHubService $gitHubService,
         private readonly ProjectBuilder\IO\InputReader $inputReader,
@@ -80,7 +79,6 @@ final class CreateRepositoryListener
         }
 
         // Create coverage repositories
-        $this->createCodeClimateRepository($buildResult, $repository);
         $this->createCoverallsRepository($buildResult, $repository);
     }
 
@@ -122,26 +120,6 @@ final class CreateRepositoryListener
         };
 
         return $response;
-    }
-
-    private function createCodeClimateRepository(
-        ProjectBuilder\Builder\BuildResult $result,
-        ValueObject\GitHubRepository $repository,
-    ): void {
-        $isCodeClimateEnabled = (bool) $result->getInstructions()->getTemplateVariable('ci.codeclimate');
-
-        if (!$isCodeClimateEnabled || $repository->isPrivate()) {
-            return;
-        }
-
-        $this->messenger->newLine();
-
-        if ($this->inputReader->ask('Should we initialize CodeClimate?')) {
-            $this->messenger->progress('Initializing CodeClimate...', IO\IOInterface::NORMAL);
-            $this->codeClimateService->addRepository($repository);
-            $this->messenger->done();
-            $this->messenger->newLine();
-        }
     }
 
     private function createCoverallsRepository(

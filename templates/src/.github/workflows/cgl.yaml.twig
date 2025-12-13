@@ -25,7 +25,8 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: {{ dependencies.php|sort|last }}
+          # We use the minimum supported PHP version
+          php-version: {{ dependencies.php|sort|first }}
           tools: composer:v2, cs2pr
         env:
           GITHUB_TOKEN: {{ "${{ secrets.GITHUB_TOKEN }}" }}
