@@ -94,8 +94,6 @@ rulesets:
             - context: 'cgl'
               integration_id: 15368
 {% for php_version in dependencies.php %}
-            - context: 'Tests (PHP {{ php_version }} & locked dependencies)'
-              integration_id: 15368
             - context: 'Tests (PHP {{ php_version }} & highest dependencies)'
               integration_id: 15368
             - context: 'Tests (PHP {{ php_version }} & lowest dependencies)'
