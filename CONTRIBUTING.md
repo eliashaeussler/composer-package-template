@@ -20,6 +20,16 @@ cd composer-package-template
 composer install
 ```
 
+## Analyze code
+
+```bash
+# All analyzers
+composer analyze
+
+# Specific analyzers
+composer analyze:dependencies
+```
+
 ## Run linters
 
 ```bash
