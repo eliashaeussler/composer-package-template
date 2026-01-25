@@ -47,7 +47,7 @@ final readonly class InitializeRepositoryListener
     {
         $buildResult = $event->getBuildResult();
 
-        if (!($event->getStep() instanceof ProjectBuilder\Builder\Generator\Step\MirrorProcessedFilesStep)) {
+        if (!$event->getStep() instanceof ProjectBuilder\Builder\Generator\Step\MirrorProcessedFilesStep) {
             return;
         }
 

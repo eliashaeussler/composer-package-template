@@ -50,7 +50,7 @@ final readonly class CreateRepositoryListener
     {
         $buildResult = $event->getBuildResult();
 
-        if (!($event->getStep() instanceof ProjectBuilder\Builder\Generator\Step\CollectBuildInstructionsStep)) {
+        if (!$event->getStep() instanceof ProjectBuilder\Builder\Generator\Step\CollectBuildInstructionsStep) {
             return;
         }
 
