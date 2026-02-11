@@ -33,7 +33,7 @@
 {% endif %}
 {% endif %}
 {% if dependencies.phpunit %}
-		"phpunit/phpunit": "{% if '8.2' in dependencies.php %}^11.5{% else %}^12.5{% endif %}",
+		"phpunit/phpunit": "{% if '8.2' in dependencies.php %}^11.5 || {% endif %}{% if '8.3' in dependencies.php %}^12.5 || {% endif %}^13.0",
 {% endif %}
 		"shipmonk/composer-dependency-analyser": "^1.8"
 	},
