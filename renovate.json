@@ -31,20 +31,5 @@
 		"managerFilePatterns": [
 			"/^templates/src/\\.github/workflows/.+\\.yaml(\\.twig)?$/"
 		]
-	},
-	"packageRules": [
-		{
-			"enabled": false,
-			"matchCurrentVersion": "8.2",
-			"matchDatasources": [
-				"github-tags"
-			],
-			"matchDepNames": [
-				"php"
-			],
-			"matchFileNames": [
-				".github/workflows/cgl.yaml"
-			]
-		}
-	]
+	}
 }
