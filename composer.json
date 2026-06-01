@@ -14,7 +14,7 @@
 	"require": {
 		"php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
 		"composer-runtime-api": "^2.1",
-		"cpsit/project-builder": "^2.11",
+		"cpsit/project-builder": "^3.0",
 		"nyholm/psr7": "^1.5",
 		"psr/http-client": "^1.0",
 		"psr/http-message": "^1.0 || ^2.0",
@@ -53,6 +53,7 @@
 	},
 	"config": {
 		"allow-plugins": {
+			"cpsit/project-builder": true,
 			"ergebnis/composer-normalize": true,
 			"phpstan/extension-installer": true
 		},
