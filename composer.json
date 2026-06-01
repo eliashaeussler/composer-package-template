@@ -53,6 +53,7 @@
 	},
 	"config": {
 		"allow-plugins": {
+			"cpsit/project-builder": true,
 			"ergebnis/composer-normalize": true,
 			"phpstan/extension-installer": true
 		},
