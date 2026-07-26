@@ -26,13 +26,14 @@ use Rector\Config\RectorConfig;
 use Rector\ValueObject\PhpVersion;
 
 return static function (RectorConfig $rectorConfig): void {
+    $rootPath = dirname(__DIR__, 2);
+
     Config::create($rectorConfig, PhpVersion::PHP_82)
         ->in(
-            __DIR__.'/src',
-            __DIR__.'/tests/src',
+            $rootPath.'/src',
+            $rootPath.'/tests',
         )
         ->withPHPUnit()
         ->apply()
-        ->cacheDirectory('.build/cache/rector')
     ;
 };

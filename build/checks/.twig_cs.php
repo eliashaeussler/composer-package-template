@@ -21,19 +21,17 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-use EliasHaeussler\PhpCsFixerConfig;
-use Symfony\Component\Finder;
+use FriendsOfTwig\Twigcs;
 
-$header = PhpCsFixerConfig\Rules\Header::create(
-    'eliashaeussler/composer-package-template',
-    PhpCsFixerConfig\Package\Type::ComposerPackage,
-    PhpCsFixerConfig\Package\Author::create('Elias Häußler', 'elias@haeussler.dev'),
-    PhpCsFixerConfig\Package\CopyrightRange::from(2023),
-    PhpCsFixerConfig\Package\License::GPL3OrLater,
-);
+$finder = Twigcs\Finder\TemplateFinder::create()
+    ->in(dirname(__DIR__, 2).'/templates')
+    // Regex hack as long as https://github.com/symfony/symfony/issues/42675 is not resolved
+    // Otherwise, dotfiles won't be included
+    ->name('/\\.twig$/')
+    ->ignoreDotFiles(false)
+    ->ignoreVCSIgnored(true)
+;
 
-return PhpCsFixerConfig\Config::create()
-    ->withRule($header)
-    ->withFinder(static fn (Finder\Finder $finder) => $finder->in(__DIR__))
-    ->setCacheFile('.build/cache/php-cs-fixer/.php-cs-fixer.cache')
+return Twigcs\Config\Config::create()
+    ->setFinder($finder)
 ;

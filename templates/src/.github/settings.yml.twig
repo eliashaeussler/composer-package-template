@@ -91,16 +91,20 @@ rulesets:
           strict_required_status_checks_policy: true
           do_not_enforce_on_create: false
           required_status_checks:
-            - context: 'cgl'
+            - context: 'Checks / Perform Composer checks'
               integration_id: 15368
+            - context: 'Checks / Perform repository checks'
+              integration_id: 15368
+{% if dependencies.phpunit %}
 {% for php_version in dependencies.php %}
-            - context: 'Tests (PHP {{ php_version }} & highest dependencies)'
+            - context: 'Tests (PHP {{ php_version }} & highest dependencies) / Run tests'
               integration_id: 15368
-            - context: 'Tests (PHP {{ php_version }} & lowest dependencies)'
+            - context: 'Tests (PHP {{ php_version }} & lowest dependencies) / Run tests'
               integration_id: 15368
 {% endfor %}
-            - context: 'Test coverage'
+            - context: 'Test coverage / Collect test coverage'
               integration_id: 15368
+{% endif %}
     bypass_actors:
       - actor_id: 5
         actor_type: RepositoryRole

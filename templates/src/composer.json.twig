@@ -45,7 +45,7 @@
 {% if dependencies.phpunit %}
 	"autoload-dev": {
 		"psr-4": {
-			"{{ package.psr4_namespace|replace({'\\': '\\\\'}) }}\\Tests\\": "tests/src/"
+			"{{ package.psr4_namespace|replace({'\\': '\\\\'}) }}\\Tests\\": "tests/unit/"
 		}
 	},
 {% endif %}
@@ -59,41 +59,63 @@
 		"sort-packages": true
 	},
 	"scripts": {
-		"analyze": [
-			"@analyze:dependencies"
+		"check": [
+			"@check:deps",
+{% if dependencies.rector %}
+			"@check:refactor",
+{% endif %}
+{% if dependencies.phpstan %}
+			"@check:static",
+{% endif %}
+			"@check:style"
 		],
-		"analyze:dependencies": "composer-dependency-analyser",
+		"check:deps": "composer-dependency-analyser",
+{% if dependencies.rector %}
+		"check:refactor": [
+			"@check:refactor:php"
+		],
+		"check:refactor:php": "@refactor:php --dry-run",
+{% endif %}
+{% if dependencies.phpstan %}
+		"check:static": "phpstan analyse -c build/checks/phpstan.php",
+{% endif %}
+		"check:style": [
+			"@check:style:composer",
+			"@check:style:editorconfig",
+			"@check:style:php"
+		],
+		"check:style:composer": "@fix:composer --dry-run",
+		"check:style:editorconfig": "ec --git-only",
+		"check:style:php": "@fix:php --dry-run",
+		"ci": [
+			"@composer validate",
+			"@composer audit",
+			"@check:deps",
+{% if dependencies.rector %}
+			"@check:refactor",
+{% endif %}
+{% if dependencies.phpstan %}
+			"@check:static --error-format github",
+{% endif %}
+			"@check:style"
+		],
 		"fix": [
 			"@fix:composer",
 			"@fix:editorconfig",
 			"@fix:php"
 		],
 		"fix:composer": "@composer normalize",
-		"fix:editorconfig": "@lint:editorconfig --fix",
-		"fix:php": "php-cs-fixer fix",
-		"lint": [
-			"@lint:composer",
-			"@lint:editorconfig",
-			"@lint:php"
-		],
-		"lint:composer": "@fix:composer --dry-run",
-		"lint:editorconfig": "ec",
-		"lint:php": "@fix:php --dry-run"{% if dependencies.rector or dependencies.phpstan or dependencies.phpunit %},{% endif %}
+		"fix:editorconfig": "@check:style:editorconfig --fix",
+		"fix:php": "php-cs-fixer fix --config build/checks/.php-cs-fixer.php"{% if dependencies.rector or dependencies.phpunit %},{% endif %}
 {% if dependencies.rector %}
-		"migration": [
-			"@migration:rector"
+		"refactor": [
+			"@refactor:php"
 		],
-		"migration:rector": "rector process -c rector.php"{% if dependencies.phpstan or dependencies.phpunit %},{% endif %}
-{% endif %}
-{% if dependencies.phpstan %}
-		"sca": [
-			"@sca:php"
-		],
-		"sca:php": "phpstan analyse -c phpstan.php"{% if dependencies.phpunit %},{% endif %}
+		"refactor:php": "rector process -c build/checks/rector.php"{% if dependencies.phpunit %},{% endif %}
 {% endif %}
 {% if dependencies.phpunit %}
 		"test": "@test:coverage --no-coverage",
-		"test:coverage": "phpunit -c phpunit.xml"
+		"test:coverage": "phpunit -c build/tests/phpunit.xml"
 {% endif %}
 	}
 }

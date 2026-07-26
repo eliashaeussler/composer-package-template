@@ -21,17 +21,14 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-use FriendsOfTwig\Twigcs;
+use EliasHaeussler\PHPStanConfig;
 
-$finder = Twigcs\Finder\TemplateFinder::create()
-    ->in(__DIR__.'/templates')
-    // Regex hack as long as https://github.com/symfony/symfony/issues/42675 is not resolved
-    // Otherwise, dotfiles won't be included
-    ->name('/\\.twig$/')
-    ->ignoreDotFiles(false)
-    ->ignoreVCSIgnored(true)
-;
-
-return Twigcs\Config\Config::create()
-    ->setFinder($finder)
+return PHPStanConfig\Config\Config::create(dirname(__DIR__, 2))
+    ->in(
+        'src',
+        'tests',
+    )
+    ->withBleedingEdge()
+    ->maxLevel()
+    ->toArray()
 ;

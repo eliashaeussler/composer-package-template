@@ -3,8 +3,7 @@
 # Composer package template
 
 [![Coverage](https://img.shields.io/coverallsCoverage/github/eliashaeussler/composer-package-template?logo=coveralls)](https://coveralls.io/github/eliashaeussler/composer-package-template)
-[![CGL](https://img.shields.io/github/actions/workflow/status/eliashaeussler/composer-package-template/cgl.yaml?label=cgl&logo=github)](https://github.com/eliashaeussler/composer-package-template/actions/workflows/cgl.yaml)
-[![Tests](https://img.shields.io/github/actions/workflow/status/eliashaeussler/composer-package-template/tests.yaml?label=tests&logo=github)](https://github.com/eliashaeussler/composer-package-template/actions/workflows/tests.yaml)
+[![CI](https://img.shields.io/github/actions/workflow/status/eliashaeussler/composer-package-template/ci.yaml?label=CI&logo=github)](https://github.com/eliashaeussler/composer-package-template/actions/workflows/ci.yaml)
 
 </div>
 
