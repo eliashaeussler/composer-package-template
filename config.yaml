@@ -8,18 +8,16 @@ steps:
         # CI/CD
         - path: '.github/workflows/*'
           if: 'ci["github_actions"]'
-        - path: '.github/workflows/tests.yaml.twig'
-          if: 'ci["github_actions"] && dependencies["phpunit"]'
 
-        # CGL
-        - path: 'phpstan.php.twig'
+        # Checks
+        - path: 'build/checks/phpstan.php.twig'
           if: 'dependencies["phpstan"]'
-        - path: 'phpunit.xml'
-          if: 'dependencies["phpunit"]'
-        - path: 'rector.php.twig'
+        - path: 'build/checks/rector.php.twig'
           if: 'dependencies["rector"]'
 
         # Tests
+        - path: 'build/tests/phpunit.xml'
+          if: 'dependencies["phpunit"]'
         - path: 'tests/*'
           if: 'dependencies["phpunit"]'
 

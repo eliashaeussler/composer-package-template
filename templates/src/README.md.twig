@@ -6,10 +6,7 @@
 [![Coverage](https://img.shields.io/coverallsCoverage/github/{{ repository.owner }}/{{ repository.name }}?logo=coveralls)](https://coveralls.io/github/{{ repository.owner }}/{{ repository.name }})
 {% endif %}
 {% if ci.github_actions %}
-[![CGL](https://img.shields.io/github/actions/workflow/status/{{ repository.owner }}/{{ repository.name }}/cgl.yaml?label=cgl&logo=github)]({{ repository.url }}/actions/workflows/cgl.yaml)
-{% if dependencies.phpunit %}
-[![Tests](https://img.shields.io/github/actions/workflow/status/{{ repository.owner }}/{{ repository.name }}/tests.yaml?label=tests&logo=github)]({{ repository.url }}/actions/workflows/tests.yaml)
-{% endif %}
+[![CI](https://img.shields.io/github/actions/workflow/status/{{ repository.owner }}/{{ repository.name }}/ci.yaml?label=CI&logo=github)]({{ repository.url }}/actions/workflows/ci.yaml)
 {% endif %}
 [![Supported PHP Versions](https://img.shields.io/packagist/dependency-v/{{ package.composer_name }}/php?logo=php)](https://packagist.org/packages/{{ package.composer_name }})
 
