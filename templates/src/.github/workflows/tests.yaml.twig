@@ -10,7 +10,7 @@ on:
 jobs:
   prepare:
     name: Prepare workflow
-    uses: eliashaeussler/.github/.github/workflows/pull-request.yaml@8df5374bd6f7047618f1869349f74f902db0ae0f # main
+    uses: eliashaeussler/.github/.github/workflows/pull-request.yaml@e48e81ab536ef92324b0ac88b9a3b4f4f30253de # main
 
   tests:
     name: Tests (PHP {{ "${{ matrix.php-version }} & ${{ matrix.dependencies }}" }} dependencies)
