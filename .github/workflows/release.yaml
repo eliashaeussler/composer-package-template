@@ -11,4 +11,4 @@ jobs:
     permissions:
       contents: write
 
-    uses: eliashaeussler/gha/.github/workflows/github-release.yaml@27331f61535ca3eca7e74928bb93e3a0b0007225 # 1.0.0
+    uses: eliashaeussler/gha/.github/workflows/github-release.yaml@57463a2f9999f6212bdd43c29785fae78e01735b # 1.0.2
