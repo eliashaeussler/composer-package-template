@@ -1785,7 +1785,8 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-06-05T06:23:12+00:00"
+            "time": "2026-06-05T06:23:12+00:00",
+            "published-time": "2026-06-27T21:46:34+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -2239,7 +2240,8 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-04-10T16:19:22+00:00"
+            "time": "2026-04-10T16:19:22+00:00",
+            "published-time": "2026-04-26T14:44:50+00:00"
         },
         {
             "name": "symfony/polyfill-intl-grapheme",
@@ -2575,7 +2577,8 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-04-10T16:19:22+00:00"
+            "time": "2026-04-10T16:19:22+00:00",
+            "published-time": "2026-04-26T14:44:45+00:00"
         },
         {
             "name": "symfony/polyfill-php82",
@@ -2983,16 +2986,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v7.4.15",
+            "version": "v7.4.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "e101850ded5d2c0d44bf32abb8996404afec2dec"
+                "reference": "1e601207ffe627a2e621faa9d661f1d32dcf1cec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/e101850ded5d2c0d44bf32abb8996404afec2dec",
-                "reference": "e101850ded5d2c0d44bf32abb8996404afec2dec",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/1e601207ffe627a2e621faa9d661f1d32dcf1cec",
+                "reference": "1e601207ffe627a2e621faa9d661f1d32dcf1cec",
                 "shasum": ""
             },
             "require": {
@@ -3035,7 +3038,7 @@
             "description": "Loads and dumps YAML files",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/yaml/tree/v7.4.15"
+                "source": "https://github.com/symfony/yaml/tree/v7.4.23"
             },
             "funding": [
                 {
@@ -3055,7 +3058,8 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-07-21T15:13:06+00:00"
+            "time": "2026-11-04T08:27:22+00:00",
+            "published-time": "2026-11-04T11:28:41+00:00"
         },
         {
             "name": "twig/twig",
@@ -4977,27 +4981,29 @@
         },
         {
             "name": "j13k/yaml-lint",
-            "version": "1.1.7",
+            "version": "1.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/j13k/yaml-lint.git",
-                "reference": "72435d04c7df3827755d1a983619343f99ad0b96"
+                "reference": "774ba9e145536635cb23cceb5d302eba9151e27d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/j13k/yaml-lint/zipball/72435d04c7df3827755d1a983619343f99ad0b96",
-                "reference": "72435d04c7df3827755d1a983619343f99ad0b96",
+                "url": "https://api.github.com/repos/j13k/yaml-lint/zipball/774ba9e145536635cb23cceb5d302eba9151e27d",
+                "reference": "774ba9e145536635cb23cceb5d302eba9151e27d",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "php": ">=5.6",
-                "symfony/yaml": "^2 || ^3 || ^4 || ^5 || ^6 || ^7"
+                "symfony/yaml": "^2 || ^3 || ^4 || ^5 || ^6 || ^7 || ^8"
             },
             "require-dev": {
+                "captainhook/captainhook": "^5",
                 "phpstan/phpstan": "^2",
-                "phpunit/phpunit": "^11",
-                "symplify/easy-coding-standard": "^12"
+                "phpunit/phpunit": "^12",
+                "ramsey/conventional-commits": "^1",
+                "symplify/easy-coding-standard": "^13"
             },
             "bin": [
                 "bin/yaml-lint"
@@ -5036,9 +5042,10 @@
             ],
             "support": {
                 "issues": "https://github.com/j13k/yaml-lint/issues",
-                "source": "https://github.com/j13k/yaml-lint/tree/1.1.7"
+                "source": "https://github.com/j13k/yaml-lint/tree/1.1.9"
             },
-            "time": "2025-10-24T05:58:08+00:00"
+            "time": "2026-11-14T12:57:42+00:00",
+            "published-time": "2026-11-14T13:01:09+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -8720,5 +8727,5 @@
         "composer-runtime-api": "^2.1"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.11.0"
 }
